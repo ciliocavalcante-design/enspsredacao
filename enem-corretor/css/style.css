@@ -1,0 +1,484 @@
+/* Reset Básico para consistência entre navegadores */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /* Garante que padding e border sejam incluídos na largura/altura do elemento <sources>[2,5]</sources> */
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+    overflow: hidden;
+}
+
+header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 30px;
+    text-align: center;
+}
+
+header h1 {
+    font-size: 2.2em;
+    margin-bottom: 10px;
+}
+
+header p {
+    opacity: 0.9;
+    font-size: 1.1em;
+}
+
+main {
+    padding: 30px;
+}
+
+/* Seleção de Redação */
+.selecao-redacao {
+    background: #f8f9fa;
+    padding: 25px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+}
+
+.selecao-redacao h2 {
+    margin-bottom: 15px;
+    color: #333;
+}
+
+#seletorRedacao {
+    width: 100%;
+    padding: 12px;
+    font-size: 1em;
+    border: 2px solid #ddd;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    background: white;
+    cursor: pointer;
+}
+
+#seletorRedacao:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+.btn-primary {
+    background: #667eea;
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    font-size: 1em;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.btn-primary:hover {
+    background: #5568d3;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+/* Área de Correção */
+.area-correcao {
+    display: grid;
+    grid-template-columns: 4fr 1fr;
+    gap: 30px;
+}
+
+.painel-esquerdo,
+.painel-direito {
+    background: #f8f9fa;
+    padding: 25px;
+    border-radius: 8px;
+}
+
+.painel-esquerdo h3,
+.painel-direito h3 {
+    color: #333;
+    margin-bottom: 15px;
+    font-size: 1.3em;
+}
+
+.info-redacao {
+    background: white;
+    padding: 15px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+    border-left: 4px solid #667eea;
+    line-height: 1.6;
+}
+
+/* Ferramentas de Desenho */
+.ferramentas-desenho {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.btn-ferramenta {
+    padding: 10px 20px;
+    border: 2px solid #ddd;
+    background: white;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-size: 0.95em;
+}
+
+.btn-ferramenta:hover {
+    border-color: #667eea;
+    color: #667eea;
+}
+
+.btn-ferramenta.active {
+    background: #667eea;
+    color: white;
+    border-color: #667eea;
+}
+
+.ferramentas-desenho input[type="color"] {
+    width: 50px;
+    height: 40px;
+    border: 2px solid #ddd;
+    border-radius: 6px;
+    cursor: pointer;
+    padding: 2px;
+}
+
+.ferramentas-desenho input[type="color"]:hover {
+    border-color: #667eea;
+}
+
+/* Container da Imagem */
+.container-imagem {
+    position: relative;
+    width: 100%;
+    height: 1000px;         /* altura da área de visualização */
+    overflow: auto;        /* se o usuário der muito zoom, scroll aparece */
+    border: 1px solid #ddd;
+    background-color: #f8f8f8;
+    border-radius: 8px;
+}
+
+.container-imagem img,
+.container-imagem canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+#imagemRedacao {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+#canvasRedacao {
+    position: absolute;
+    top: 0;
+    left: 0;
+    cursor: crosshair;
+}
+
+/* Competências */
+.competencia {
+    background: white;
+    padding: 15px;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    border-left: 4px solid #667eea;
+}
+
+.competencia label {
+    display: block;
+    margin-bottom: 8px;
+    color: #333;
+}
+
+.info-tooltip {
+    cursor: help;
+    opacity: 0.6;
+    font-size: 0.9em;
+}
+
+.nota-competencia {
+    width: 100%;
+    padding: 10px;
+    font-size: 1em;
+    border: 2px solid #ddd;
+    border-radius: 6px;
+    background: white;
+    cursor: pointer;
+    transition: border-color 0.3s;
+}
+
+.nota-competencia:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+/* Nota Final */
+.nota-final {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    margin: 20px 0;
+}
+
+.nota-final h3 {
+    color: white;
+    margin-bottom: 10px;
+}
+
+.display-nota {
+    font-size: 3em;
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+.max-nota {
+    opacity: 0.9;
+    font-size: 1.1em;
+}
+
+/* Comentários */
+.area-comentarios {
+    margin: 20px 0;
+}
+
+.area-comentarios label {
+    display: block;
+    margin-bottom: 8px;
+    color: #333;
+}
+
+#comentarios {
+    width: 100%;
+    min-height: 120px;
+    padding: 12px;
+    border: 2px solid #ddd;
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 1em;
+    resize: vertical;
+}
+
+#comentarios:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+/* Botão Salvar */
+.btn-salvar {
+    width: 100%;
+    background: #28a745;
+    color: white;
+    border: none;
+    padding: 15px;
+    font-size: 1.1em;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-weight: bold;
+}
+
+.btn-salvar:hover {
+    background: #218838;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(40, 167, 69, 0.4);
+}
+
+/* Estilo do botão alterar professor */
+#btnAlterarProfessor:hover {
+    background: rgba(255,255,255,0.5) !important;
+    transform: scale(1.05);
+}
+
+/* Controles de Zoom */
+.controles-zoom {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+    justify-content: center;
+    align-items: center;
+}
+
+.controles-zoom .btn-ferramenta {
+    min-width: 50px;
+    padding: 8px 15px;
+}
+
+.zoom-display {
+    background: #667eea;
+    color: white;
+    padding: 8px 20px;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 0.95em;
+    min-width: 70px;
+    text-align: center;
+}
+
+/* Botões secundários (Histórico, Excel) */
+.btn-secundario {
+    padding: 12px 20px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    flex: 1;
+}
+
+.btn-secundario:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+}
+
+/* Modal de histórico */
+.modal-historico {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    animation: fadeIn 0.3s ease;
+}
+
+.modal-conteudo {
+    background-color: white;
+    margin: 3% auto;
+    padding: 30px;
+    border-radius: 15px;
+    width: 90%;
+    max-width: 1000px;
+    max-height: 80vh;
+    overflow-y: auto;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #667eea;
+}
+
+.modal-header h2 {
+    color: #667eea;
+    margin: 0;
+}
+
+.btn-fechar {
+    background: none;
+    border: none;
+    font-size: 28px;
+    cursor: pointer;
+    color: #999;
+    transition: color 0.3s;
+}
+
+.btn-fechar:hover {
+    color: #333;
+}
+
+/* Tabela de histórico */
+.tabela-historico {
+    width: 100%;
+    border-collapse: collapse; /* Para bordas da tabela <sources>[1]</sources> */
+    margin-top: 20px;
+}
+
+.tabela-historico th {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 12px;
+    text-align: left;
+    font-weight: 600;
+}
+
+.tabela-historico td {
+    padding: 12px;
+    border-bottom: 1px solid #eee;
+}
+
+.tabela-historico tr:hover {
+    background-color: #f9f9f9;
+}
+
+.btn-excluir {
+    background-color: #ff4757;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: all 0.3s;
+}
+
+.btn-excluir:hover {
+    background-color: #ff3838;
+    transform: scale(1.05);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Responsivo */
+@media (max-width: 968px) {
+    .area-correcao {
+        grid-template-columns: 1fr;
+    }
+
+    header h1 {
+        font-size: 1.8em;
+    }
+
+    .display-nota {
+        font-size: 2.5em;
+    }
+}
+
+@media (max-width: 600px) {
+    body {
+        padding: 10px;
+    }
+
+    main {
+        padding: 15px;
+    }
+
+    .painel-esquerdo,
+    .painel-direito {
+        padding: 15px;
+    }
+
+    .ferramentas-desenho {
+        justify-content: center;
+    }
+}
