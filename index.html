@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ENSPS - Corretor de Redação ENEM</title>
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- Bibliotecas externas -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- 🏫 HEADER AQUI -->
+        <header>
+            <div style="display: flex; align-items: center; justify-content: center; gap: 20px;">
+                <img src="https://github.com/ciliocavalcante-design/ensps/blob/main/LOGO%20ENSPS%202024.5.png?raw=true" 
+                     alt="Logo ENSPS" 
+                     style="height: 60px; width: auto;">
+                <div>
+                    <h1>📝 ENSPS - Corretor de Redação ENEM</h1>
+                    <p>Sistema de correção com marcação de trechos e avaliação por competências</p>
+                </div>
+            </div>
+            <div style="margin-top: 15px; text-align: center;">
+                <span style="background: rgba(255,255,255,0.2); padding: 8px 20px; border-radius: 20px; font-size: 0.95em;">
+                    👨‍🏫 Professor: <strong id="nomeProfessor">---</strong>
+                    <button id="btnAlterarProfessor" style="margin-left: 10px; background: rgba(255,255,255,0.3); border: none; padding: 5px 12px; border-radius: 15px; cursor: pointer; color: white; font-size: 0.85em;">✏️ Alterar</button>
+                </span>
+            </div>
+        </header>
+
+        <main>
+            <!-- Seleção de Redação -->
+            <section class="selecao-redacao">
+                <h2>Selecionar Redação</h2>
+                <select id="seletorRedacao">
+                    <option value="">-- Escolha uma redação --</option>
+                </select>
+                <button id="btnCarregar" class="btn-primary">Carregar Redação</button>
+            </section>
+
+            <!-- Área de Correção (inicialmente oculta) -->
+            <div id="areaCorrecao" class="area-correcao" style="display: none;">
+                <!-- Painel Esquerdo: Redação -->
+                <div class="painel-esquerdo">
+                    <h3>Redação Escaneada</h3>
+
+                    <div class="info-redacao">
+                        <strong>Aluno:</strong> <span id="nomeAluno">---</span><br>
+                        <strong>Tema:</strong> <span id="temaRedacao">---</span>
+                    </div>
+
+                    <!-- Ferramentas de Desenho -->
+                    <div class="ferramentas-desenho">
+                        <button id="btnCaneta" class="btn-ferramenta active">🖌️ Caneta</button>
+                        <button id="btnMarcador" class="btn-ferramenta">🖍️ Marcador</button>
+                        <input type="color" id="corCaneta" value="#FF0000">
+                        <button id="btnBorracha" class="btn-ferramenta">🧽 Borracha</button>
+                        <button id="btnLimparDesenho" class="btn-ferramenta">🗑️ Limpar Tudo</button>
+                    </div>
+
+                    <!-- Controles de Zoom -->
+                    <div class="controles-zoom">
+                        <button id="btnZoomOut" class="btn-ferramenta" title="Diminuir zoom">🔍−</button>
+                        <span id="zoomDisplay" class="zoom-display">100%</span>
+                        <button id="btnZoomIn" class="btn-ferramenta" title="Aumentar zoom">🔍+</button>
+                        <button id="btnZoomReset" class="btn-ferramenta" title="Resetar zoom">⟲</button>
+                    </div>
+
+                    <!-- Container da Imagem -->
+                    <div class="container-imagem">
+                        <img id="imagemRedacao" src="" alt="Redação">
+                        <canvas id="canvasRedacao"></canvas>
+                    </div>
+                </div>
+
+                <!-- Painel Direito: Avaliação -->
+                <div class="painel-direito">
+                    <h3>Avaliação por Competências</h3>
+
+                    <!-- Competência 1 -->
+                    <div class="competencia">
+                        <label>
+                            <strong>Competência 1</strong> - Domínio da norma padrão
+                            <span class="info-tooltip" title="Demonstrar domínio da modalidade escrita formal da língua portuguesa">ℹ️</span>
+                        </label>
+                        <select class="nota-competencia" data-competencia="1">
+                            <option value="0">0 pontos</option>
+                            <option value="40">40 pontos</option>
+                            <option value="80">80 pontos</option>
+                            <option value="120">120 pontos</option>
+                            <option value="160">160 pontos</option>
+                            <option value="200">200 pontos</option>
+                        </select>
+                    </div>
+
+                    <!-- Competência 2 -->
+                    <div class="competencia">
+                        <label>
+                            <strong>Competência 2</strong> - Compreensão do tema
+                            <span class="info-tooltip" title="Compreender a proposta de redação e aplicar conceitos das várias áreas de conhecimento">ℹ️</span>
+                        </label>
+                        <select class="nota-competencia" data-competencia="2">
+                            <option value="0">0 pontos</option>
+                            <option value="40">40 pontos</option>
+                            <option value="80">80 pontos</option>
+                            <option value="120">120 pontos</option>
+                            <option value="160">160 pontos</option>
+                            <option value="200">200 pontos</option>
+                        </select>
+                    </div>
+
+                    <!-- Competência 3 -->
+                    <div class="competencia">
+                        <label>
+                            <strong>Competência 3</strong> - Argumentação
+                            <span class="info-tooltip" title="Selecionar, relacionar, organizar e interpretar informações, fatos, opiniões e argumentos">ℹ️</span>
+                        </label>
+                        <select class="nota-competencia" data-competencia="3">
+                            <option value="0">0 pontos</option>
+                            <option value="40">40 pontos</option>
+                            <option value="80">80 pontos</option>
+                            <option value="120">120 pontos</option>
+                            <option value="160">160 pontos</option>
+                            <option value="200">200 pontos</option>
+                        </select>
+                    </div>
+
+                    <!-- Competência 4 -->
+                    <div class="competencia">
+                        <label>
+                            <strong>Competência 4</strong> - Coesão textual
+                            <span class="info-tooltip" title="Demonstrar conhecimento dos mecanismos linguísticos necessários para a construção da argumentação">ℹ️</span>
+                        </label>
+                        <select class="nota-competencia" data-competencia="4">
+                            <option value="0">0 pontos</option>
+                            <option value="40">40 pontos</option>
+                            <option value="80">80 pontos</option>
+                            <option value="120">120 pontos</option>
+                            <option value="160">160 pontos</option>
+                            <option value="200">200 pontos</option>
+                        </select>
+                    </div>
+
+                    <!-- Competência 5 -->
+                    <div class="competencia">
+                        <label>
+                            <strong>Competência 5</strong> - Proposta de intervenção
+                            <span class="info-tooltip" title="Elaborar proposta de intervenção para o problema abordado, respeitando os direitos humanos">ℹ️</span>
+                        </label>
+                        <select class="nota-competencia" data-competencia="5">
+                            <option value="0">0 pontos</option>
+                            <option value="40">40 pontos</option>
+                            <option value="80">80 pontos</option>
+                            <option value="120">120 pontos</option>
+                            <option value="160">160 pontos</option>
+                            <option value="200">200 pontos</option>
+                        </select>
+                    </div>
+
+                    <!-- Nota Final -->
+                    <div class="nota-final">
+                        <h3>Nota Final</h3>
+                        <div class="display-nota" id="notaFinal">0</div>
+                        <p class="max-nota">/ 1000 pontos</p>
+                    </div>
+
+                    <!-- Comentários -->
+                    <div class="area-comentarios">
+                        <label><strong>Comentários Gerais</strong></label>
+                        <textarea id="comentarios" placeholder="Digite aqui os comentários sobre a redação..."></textarea>
+                    </div>
+
+
+<div style="display: flex; gap: 10px; margin-bottom: 15px; flex-wrap: wrap;">
+    <button id="btnVerHistorico" class="btn-secundario">
+        📊 Ver Histórico
+    </button>
+    <button id="btnExportarExcel" class="btn-secundario">
+        📊 Exportar Excel (XLSX)
+    </button>
+ <!--   <button id="btnExportarPDF" class="btn-secundario">
+        📄 Exportar PDF
+    </button>-->
+</div>
+
+                    <!-- Botão Salvar -->
+                    <button id="btnSalvarCorrecao" class="btn-salvar">💾 Salvar Correção e Gerar PDF</button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/redacoes.js"></script>
+    <script src="js/app.js"></script>
+    <script src="https://cdn.sheetjs.com/xlsx-0.20.1/package/dist/xlsx.full.min.js"></script>
+
+</body>
+</html>
