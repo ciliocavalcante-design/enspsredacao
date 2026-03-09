@@ -176,10 +176,9 @@ main {
 .container-imagem {
     position: relative;
     width: 100%;
-    height: 80vh;
+    height: calc(100vh - 150px);
     overflow: auto;
     border: 1px solid #ddd;
-    background-color: #f8f8f8;
     border-radius: 8px;
 }
 
@@ -204,6 +203,8 @@ main {
     position: absolute;
     top: 0;
     left: 0;
+        touch-action: none;
+
 }
 
 /* Competências */
