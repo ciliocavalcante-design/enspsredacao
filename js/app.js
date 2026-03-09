@@ -272,11 +272,11 @@ imagemRedacao.onload = function() {
     zoomWrapper.style.width = imagemRedacao.naturalWidth + "px";
     zoomWrapper.style.height = imagemRedacao.naturalHeight + "px";
 
-    const larguraContainer = containerImagem.offsetWidth;
-    const larguraImagem = imagemRedacao.naturalWidth;
+    const larguraContainer = containerImagem.clientWidth;
+const larguraImagem = imagemRedacao.naturalWidth;
 
-    zoomBase = larguraContainer / larguraImagem;
-    zoomLevel = 1;
+zoomBase = larguraContainer / larguraImagem;
+zoomLevel = 1;
 
     aplicarZoom();
     atualizarDisplayZoom();
