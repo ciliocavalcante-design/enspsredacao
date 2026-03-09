@@ -183,10 +183,13 @@ function atualizarDisplayZoom() {
 }
 
 function aplicarZoom() {
-    if (!zoomWrapper) return;
+    if (!zoomWrapper || !imagemRedacao.naturalWidth) return;
 
-    const largura = imagemRedacao.naturalWidth * zoomLevel;
-    const altura = imagemRedacao.naturalHeight * zoomLevel;
+    const larguraOriginal = imagemRedacao.naturalWidth;
+    const alturaOriginal = imagemRedacao.naturalHeight;
+
+    const largura = larguraOriginal * zoomLevel;
+    const altura = alturaOriginal * zoomLevel;
 
     zoomWrapper.style.width = largura + "px";
     zoomWrapper.style.height = altura + "px";
