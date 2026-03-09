@@ -176,15 +176,14 @@ main {
 .container-imagem {
     position: relative;
     width: 100%;
-    height: calc(100vh - 150px);
+    height: 70vh;
+    min-height: 500px;
     overflow: auto;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-}
 
 /* Wrapper para o zoom */
 .zoom-wrapper {
     position: relative;
+    display: inline-block;
 }
 
 .container-imagem img,
@@ -196,7 +195,8 @@ main {
 
 #imagemRedacao {
     display: block;
-    width: 100%;
+    width: auto;
+    max-width: none;
 }
 
 #canvasRedacao {
