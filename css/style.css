@@ -181,12 +181,12 @@ main {
     border: 1px solid #ddd;
     background-color: #f8f8f8;
     border-radius: 8px;
-    margin-bottom: 20px;
 }
 
 /* Wrapper para o zoom */
 .zoom-wrapper {
     position: relative;
+    transform-origin: top left;
 }
 
 .container-imagem img,
