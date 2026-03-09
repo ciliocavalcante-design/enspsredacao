@@ -183,22 +183,10 @@ function atualizarDisplayZoom() {
 }
 
 function aplicarZoom() {
-    if (!zoomWrapper || !imagemRedacao.naturalWidth) return;
+    if (!zoomWrapper) return;
 
-    const larguraOriginal = imagemRedacao.naturalWidth;
-    const alturaOriginal = imagemRedacao.naturalHeight;
-
-    const largura = larguraOriginal * zoomLevel;
-    const altura = alturaOriginal * zoomLevel;
-
-    zoomWrapper.style.width = largura + "px";
-    zoomWrapper.style.height = altura + "px";
-
-    canvasRedacao.style.width = largura + "px";
-    canvasRedacao.style.height = altura + "px";
-
-    imagemRedacao.style.width = largura + "px";
-    imagemRedacao.style.height = altura + "px";
+    zoomWrapper.style.transform = `scale(${zoomLevel})`;
+    zoomWrapper.style.transformOrigin = "top left";
 }
 
 function carregarRedacao() {
@@ -324,8 +312,8 @@ function setTool(tool) {
 function getCanvasCoordinates(e) {
     const rect = canvasRedacao.getBoundingClientRect();
 
-    const x = (e.clientX - rect.left) * (canvasRedacao.width / rect.width);
-    const y = (e.clientY - rect.top) * (canvasRedacao.height / rect.height);
+    const x = (e.clientX - rect.left) / zoomLevel;
+    const y = (e.clientY - rect.top) / zoomLevel;
 
     return { x, y };
 }
