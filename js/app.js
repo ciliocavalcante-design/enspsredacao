@@ -268,7 +268,11 @@ imagemRedacao.onload = function() {
     canvasDesenho.height = imagemRedacao.naturalHeight;
     ctxDesenho.clearRect(0, 0, canvasDesenho.width, canvasDesenho.height);
 
-    const larguraContainer = containerImagem.clientWidth;
+    // ⭐ IMPORTANTE
+    zoomWrapper.style.width = imagemRedacao.naturalWidth + "px";
+    zoomWrapper.style.height = imagemRedacao.naturalHeight + "px";
+
+    const larguraContainer = containerImagem.offsetWidth;
     const larguraImagem = imagemRedacao.naturalWidth;
 
     zoomBase = larguraContainer / larguraImagem;
