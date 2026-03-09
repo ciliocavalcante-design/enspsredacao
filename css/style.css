@@ -186,7 +186,6 @@ main {
 /* Wrapper para o zoom */
 .zoom-wrapper {
     position: relative;
-    transform-origin: top left;
 }
 
 .container-imagem img,
@@ -198,10 +197,13 @@ main {
 
 #imagemRedacao {
     display: block;
+    width: 100%;
 }
 
 #canvasRedacao {
-    cursor: crosshair;
+    position: absolute;
+    top: 0;
+    left: 0;
 }
 
 /* Competências */
