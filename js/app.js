@@ -4,6 +4,7 @@ let drawing = false;
 let currentTool = 'pen';
 let currentColor = '#FF0000';
 let zoomLevel = 1;
+let zoomBase = 1;
 let nomeProfessor = localStorage.getItem('nomeProfessor') || '';
 
 // Canvas de desenho separado
@@ -185,7 +186,9 @@ function atualizarDisplayZoom() {
 function aplicarZoom() {
     if (!zoomWrapper) return;
 
-    zoomWrapper.style.transform = `scale(${zoomLevel})`;
+    const escalaFinal = zoomBase * zoomLevel;
+
+    zoomWrapper.style.transform = `scale(${escalaFinal})`;
     zoomWrapper.style.transformOrigin = "top left";
 }
 
@@ -256,33 +259,27 @@ function carregarImagem(src) {
 
     imagemRedacao.src = src;
 
-    imagemRedacao.onload = function() {
-        // Redefine as dimensões do canvas para as dimensões naturais da imagem
-        // Isso é importante para a proporção do desenho
-        canvasRedacao.width = imagemRedacao.naturalWidth;
-        canvasRedacao.height = imagemRedacao.naturalHeight;
+imagemRedacao.onload = function() {
 
-        canvasDesenho.width = imagemRedacao.naturalWidth;
-        canvasDesenho.height = imagemRedacao.naturalHeight;
-        ctxDesenho.clearRect(0, 0, canvasDesenho.width, canvasDesenho.height);
+    canvasRedacao.width = imagemRedacao.naturalWidth;
+    canvasRedacao.height = imagemRedacao.naturalHeight;
 
-        zoomLevel = 1; // Reseta o zoom ao carregar nova imagem
-        aplicarZoom();
-        atualizarDisplayZoom();
+    canvasDesenho.width = imagemRedacao.naturalWidth;
+    canvasDesenho.height = imagemRedacao.naturalHeight;
+    ctxDesenho.clearRect(0, 0, canvasDesenho.width, canvasDesenho.height);
 
-        redesenharCanvas();
-        areaCorrecao.style.display = 'grid';
+    const larguraContainer = containerImagem.clientWidth;
+    const larguraImagem = imagemRedacao.naturalWidth;
 
-        // Ajusta a altura do container-imagem para a proporção da imagem
-        // Isso é importante para o object-fit: contain funcionar bem
-        const aspectRatio = imagemRedacao.naturalHeight / imagemRedacao.naturalWidth;
-        containerImagem.style.paddingBottom = `${aspectRatio * 100}%`;
-    };
+    zoomBase = larguraContainer / larguraImagem;
+    zoomLevel = 1;
 
-    imagemRedacao.onerror = function() {
-        alert('❌ Erro ao carregar a imagem.');
-        console.error(`Falha ao carregar imagem: ${src}`);
-    };
+    aplicarZoom();
+    atualizarDisplayZoom();
+
+    redesenharCanvas();
+    areaCorrecao.style.display = 'grid';
+};
 }
 
 function resetarAvaliacao() {
@@ -312,8 +309,10 @@ function setTool(tool) {
 function getCanvasCoordinates(e) {
     const rect = canvasRedacao.getBoundingClientRect();
 
-    const x = (e.clientX - rect.left) / zoomLevel;
-    const y = (e.clientY - rect.top) / zoomLevel;
+    const escalaFinal = zoomBase * zoomLevel;
+
+    const x = (e.clientX - rect.left) / escalaFinal;
+    const y = (e.clientY - rect.top) / escalaFinal;
 
     return { x, y };
 }
