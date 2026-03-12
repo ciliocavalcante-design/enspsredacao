@@ -56,15 +56,9 @@ const redacoes = [
         imagem: "redacao9.JPG",
         data: "16/01/2024"
     },
+
     { // <--- Removida a chave '{' extra aqui
         id: 9,
-        aluno: "JOAO MARCELO RIOLO DA SILVA",
-        tema: "Proposta 3º Ano",
-        imagem: "redacao10.JPG",
-        data: "16/01/2024"
-    },
-    { // <--- Removida a chave '{' extra aqui
-        id: 10,
         aluno: "LUIS FERNANDO CLAUDIO FERRO",
         tema: "Proposta 3º Ano",
         imagem: "redacao11.JPG",
@@ -163,3 +157,4 @@ const redacoes = [
     } // <--- Fechamento correto do último objeto
 
 ]; // <--- Fechamento do array 'redacoes'
+
