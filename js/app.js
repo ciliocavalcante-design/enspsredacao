@@ -10,6 +10,10 @@ let nomeProfessor = localStorage.getItem('nomeProfessor') || '';
 let canvasDesenho = null;
 let ctxDesenho = null;
 
+let isPanning = false;
+let panStart = { x: 0, y: 0 };
+let scrollStart = { left: 0, top: 0 };
+
 // Elementos DOM
 const seletorRedacao = document.getElementById('seletorRedacao');
 const btnCarregar = document.getElementById('btnCarregar');
@@ -295,18 +299,38 @@ function resetarAvaliacao() {
     calcularNotaFinal();
 }
 
+
+
 function setTool(tool) {
+    // Se clicar na ferramenta já ativa, desmarca
+    if (currentTool === tool) {
+        currentTool = null;
+        btnCaneta.classList.remove('active');
+        btnMarcador.classList.remove('active');
+        btnBorracha.classList.remove('active');
+        if (btnMao) btnMao.classList.remove('active');
+        canvasRedacao.style.cursor = 'default';
+        return;
+    }
+
     currentTool = tool;
     btnCaneta.classList.toggle('active', tool === 'pen');
     btnMarcador.classList.toggle('active', tool === 'marker');
     btnBorracha.classList.toggle('active', tool === 'eraser');
+    if (btnMao) btnMao.classList.toggle('active', tool === 'hand');
 
     if (tool === 'marker') {
         currentColor = '#FFFF00';
         corCaneta.value = currentColor;
+        canvasRedacao.style.cursor = 'crosshair';
     } else if (tool === 'pen') {
         currentColor = '#FF0000';
         corCaneta.value = currentColor;
+        canvasRedacao.style.cursor = 'crosshair';
+    } else if (tool === 'eraser') {
+        canvasRedacao.style.cursor = 'cell';
+    } else if (tool === 'hand') {
+        canvasRedacao.style.cursor = 'grab';
     }
 }
 
@@ -324,15 +348,33 @@ function getCanvasCoordinates(e) {
 }
 
 function startDrawing(e) {
+    if (currentTool === 'hand') {
+        isPanning = true;
+        panStart = { x: e.clientX, y: e.clientY };
+        scrollStart = {
+            left: containerImagem.scrollLeft,
+            top: containerImagem.scrollTop
+        };
+        canvasRedacao.style.cursor = 'grabbing';
+        return;
+    }
+    if (!currentTool) return;
+
     drawing = true;
     const { x, y } = getCanvasCoordinates(e);
-
     ctxDesenho.beginPath();
     ctxDesenho.moveTo(x, y);
 }
 
 function draw(e) {
-    if (!drawing) return;
+    if (currentTool === 'hand' && isPanning) {
+        const dx = e.clientX - panStart.x;
+        const dy = e.clientY - panStart.y;
+        containerImagem.scrollLeft = scrollStart.left - dx;
+        containerImagem.scrollTop = scrollStart.top - dy;
+        return;
+    }
+    if (!drawing || !currentTool) return;
 
     const { x, y } = getCanvasCoordinates(e);
 
@@ -364,6 +406,11 @@ function draw(e) {
 }
 
 function stopDrawing() {
+    if (isPanning) {
+        isPanning = false;
+        canvasRedacao.style.cursor = 'grab';
+        return;
+    }
     if (drawing) {
         drawing = false;
         ctxDesenho.beginPath();
@@ -884,4 +931,3 @@ function carregarImagemPromise(url) {
         img.src = url;
     });
 }
-
