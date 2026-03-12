@@ -1,7 +1,7 @@
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 // ⚙️ CONFIGURAÇÕES GITHUB API
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-const GITHUB_TOKEN = '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';
+const GITHUB_TOKEN = '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';
 const GITHUB_USUARIO = 'ciliocavalcante-design';
 const GITHUB_REPOSITORIO = 'ensps';
 const GITHUB_PASTA = 'correcoes';
@@ -80,7 +80,7 @@ async function salvarNoGithub(nomeArquivo, conteudo, mensagemCommit) {
         let sha = null;
         const verificacao = await fetch(url, {
             headers: {
-                'Authorization': `Bearer ${GITHUB_TOKEN}`,
+                'Authorization': `token ${GITHUB_TOKEN}`,
                 'Accept': 'application/vnd.github.v3+json'
             }
         });
