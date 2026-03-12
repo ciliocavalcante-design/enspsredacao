@@ -31,9 +31,13 @@ const ctx = canvasRedacao.getContext('2d', { willReadFrequently: true });
 const btnCaneta = document.getElementById('btnCaneta');
 const btnMarcador = document.getElementById('btnMarcador');
 const btnBorracha = document.getElementById('btnBorracha');
+const btnMao = document.getElementById('btnMao');         // ← adicionado aqui
 const corCaneta = document.getElementById('corCaneta');
 const btnLimparDesenho = document.getElementById('btnLimparDesenho');
 const containerImagem = document.querySelector('.container-imagem');
+const btnMao = document.getElementById('btnMao');
+
+
 
 // Adicionar um wrapper para o zoom (será criado e preenchido no DOMContentLoaded)
 let zoomWrapper = null;
@@ -104,6 +108,10 @@ function configurarEventos() {
     btnCaneta.addEventListener('click', () => setTool('pen'));
     btnMarcador.addEventListener('click', () => setTool('marker'));
     btnBorracha.addEventListener('click', () => setTool('eraser'));
+
+    // 🖐️ Botão mãozinha
+    if (btnMao) btnMao.addEventListener('click', () => setTool('hand'));
+
     corCaneta.addEventListener('change', (e) => {
         currentColor = e.target.value;
     });
@@ -122,7 +130,6 @@ function configurarEventos() {
         select.addEventListener('change', calcularNotaFinal);
     });
 
-    // Botão para alterar nome do professor
     const btnAlterarProfessor = document.getElementById('btnAlterarProfessor');
     if (btnAlterarProfessor) {
         btnAlterarProfessor.addEventListener('click', () => {
@@ -135,22 +142,13 @@ function configurarEventos() {
         });
     }
 
-    // 🆕 NOVOS BOTÕES
     const btnVerHistorico = document.getElementById('btnVerHistorico');
     const btnExportarExcel = document.getElementById('btnExportarExcel');
     const btnExportarPDF = document.getElementById('btnExportarPDF');
 
-    if (btnVerHistorico) {
-        btnVerHistorico.addEventListener('click', abrirModalHistorico);
-    }
-
-    if (btnExportarExcel) {
-        btnExportarExcel.addEventListener('click', exportarExcel);
-    }
-
-    if (btnExportarPDF) {
-        btnExportarPDF.addEventListener('click', exportarTabelaPDF);
-    }
+    if (btnVerHistorico) btnVerHistorico.addEventListener('click', abrirModalHistorico);
+    if (btnExportarExcel) btnExportarExcel.addEventListener('click', exportarExcel);
+    if (btnExportarPDF) btnExportarPDF.addEventListener('click', exportarTabelaPDF);
 }
 
 // 🔍 Zoom apenas com botões
