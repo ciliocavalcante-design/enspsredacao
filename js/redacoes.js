@@ -25,7 +25,7 @@ const redacoes = [
         id: 4,
         aluno: "BRUNO VICTOR DE SOUSA CAVALCANTE",
         tema: "Proposta 3º Ano",
-        imagem: "redacao2.JPG",
+        imagem: "redacao4.JPG",
         data: "16/01/2024"
     },
     { // <--- Removida a chave '{' extra aqui
@@ -161,4 +161,5 @@ const redacoes = [
         imagem: "redacao27.JPG",
         data: "16/01/2024"
     } // <--- Fechamento correto do último objeto
+
 ]; // <--- Fechamento do array 'redacoes'
