@@ -74,18 +74,23 @@ async function salvarNoGithub(nomeArquivo, conteudo, mensagemCommit) {
     try {
         const url = `https://api.github.com/repos/${GITHUB_USUARIO}/${GITHUB_REPOSITORIO}/contents/${GITHUB_PASTA}/${nomeArquivo}`;
 
+        console.log('📤 Tentando salvar no GitHub:', url);
+
         // Verifica se o arquivo já existe para pegar o SHA
         let sha = null;
         const verificacao = await fetch(url, {
             headers: {
-                'Authorization': `token ${GITHUB_TOKEN}`,
+                'Authorization': `Bearer ${GITHUB_TOKEN}`,
                 'Accept': 'application/vnd.github.v3+json'
             }
         });
 
+        console.log('🔍 Status da verificação:', verificacao.status);
+
         if (verificacao.ok) {
             const dadosExistentes = await verificacao.json();
             sha = dadosExistentes.sha;
+            console.log('📄 Arquivo já existe, SHA:', sha);
         }
 
         // Converte conteúdo para base64
@@ -102,12 +107,14 @@ async function salvarNoGithub(nomeArquivo, conteudo, mensagemCommit) {
         const resposta = await fetch(url, {
             method: 'PUT',
             headers: {
-                'Authorization': `token ${GITHUB_TOKEN}`,
+                'Authorization': `Bearer ${GITHUB_TOKEN}`,
                 'Accept': 'application/vnd.github.v3+json',
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(body)
         });
+
+        console.log('📬 Status do envio:', resposta.status);
 
         if (resposta.ok) {
             console.log(`✅ Arquivo salvo no GitHub: ${GITHUB_PASTA}/${nomeArquivo}`);
@@ -115,6 +122,7 @@ async function salvarNoGithub(nomeArquivo, conteudo, mensagemCommit) {
         } else {
             const erro = await resposta.json();
             console.error('❌ Erro ao salvar no GitHub:', erro.message);
+            console.error('❌ Detalhes:', JSON.stringify(erro));
             return false;
         }
 
