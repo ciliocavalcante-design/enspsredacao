@@ -176,14 +176,25 @@ main {
 .container-imagem {
     position: relative;
     width: 100%;
-    height: 70vh;
-    min-height: 500px;
-    overflow: auto;
+    /* Removido height: 1000px; para que a altura seja dinâmica */
+    padding-bottom: 75%; /* Proporção 4:3, ajuste conforme a proporção da sua imagem */
+    height: 0; /* Reseta a altura para usar padding-bottom */
+    overflow: hidden; /* Oculta o que transborda, mas o JS vai gerenciar o scroll */
+    border: 1px solid #ddd;
+    background-color: #f8f8f8;
+    border-radius: 8px;
+    margin-bottom: 20px; /* Espaçamento abaixo da imagem */
+}
 
 /* Wrapper para o zoom */
 .zoom-wrapper {
-    position: relative;
-    display: inline-block;
+    position: absolute; /* Para ocupar o container-imagem */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transform-origin: top left; /* Ponto de origem do zoom */
+    overflow: auto; /* Permite scroll dentro do wrapper quando há zoom */
 }
 
 .container-imagem img,
@@ -191,20 +202,17 @@ main {
     position: absolute;
     top: 0;
     left: 0;
+    width: 100%; /* Imagem e canvas ocupam 100% da largura do container */
+    height: 100%; /* Imagem e canvas ocupam 100% da altura do container */
+    object-fit: contain; /* Garante que a imagem inteira seja visível, sem cortar */
 }
 
 #imagemRedacao {
     display: block;
-    width: auto;
-    max-width: none;
 }
 
 #canvasRedacao {
-    position: absolute;
-    top: 0;
-    left: 0;
-        touch-action: none;
-
+    cursor: crosshair;
 }
 
 /* Competências */
