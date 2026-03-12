@@ -35,7 +35,6 @@ const btnMao = document.getElementById('btnMao');         // ← adicionado aqui
 const corCaneta = document.getElementById('corCaneta');
 const btnLimparDesenho = document.getElementById('btnLimparDesenho');
 const containerImagem = document.querySelector('.container-imagem');
-const btnMao = document.getElementById('btnMao');
 
 
 
