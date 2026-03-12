@@ -179,7 +179,7 @@ main {
     /* Removido height: 1000px; para que a altura seja dinâmica */
     padding-bottom: 75%; /* Proporção 4:3, ajuste conforme a proporção da sua imagem */
     height: 0; /* Reseta a altura para usar padding-bottom */
-    overflow: hidden; /* Oculta o que transborda, mas o JS vai gerenciar o scroll */
+    overflow: auto; /* Oculta o que transborda, mas o JS vai gerenciar o scroll */
     border: 1px solid #ddd;
     background-color: #f8f8f8;
     border-radius: 8px;
