@@ -1,3 +1,11 @@
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// ⚙️ CONFIGURAÇÕES GITHUB API
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+const GITHUB_TOKEN = 'enspstoken';
+const GITHUB_USUARIO = 'ciliocavalcante-design';
+const GITHUB_REPOSITORIO = 'ensps';
+const GITHUB_PASTA = 'correcoes';
+
 // Variáveis globais
 let redacaoAtual = null;
 let drawing = false;
@@ -460,7 +468,7 @@ function calcularNotaFinal() {
 // 💾 SISTEMA DE SALVAMENTO
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-function salvarCorrecao() {
+async function salvarCorrecao() {
     if (!redacaoAtual) {
         alert('⚠️ Carregue uma redação primeiro!');
         return;
@@ -495,27 +503,36 @@ function salvarCorrecao() {
     correcoes.push(correcao);
     localStorage.setItem('correcoes', JSON.stringify(correcoes));
 
-    // 💾 Salvar arquivo JSON individual
-    salvarArquivoJSON(correcao);
+    // Salvar JSON (local + GitHub)
+    await salvarArquivoJSON(correcao);
 
     // Gerar PDF
     gerarPDF(correcao);
 }
 
 // 💾 Salvar arquivo JSON individual
-function salvarArquivoJSON(correcao) {
+async function salvarArquivoJSON(correcao) {
     const nomeArquivo = `correcao_${correcao.aluno.replace(/\s/g, '_')}_${correcao.timestamp}.json`;
     const dataStr = JSON.stringify(correcao, null, 2);
+
+    // Salva localmente (download)
     const blob = new Blob([dataStr], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
-
     const link = document.createElement('a');
     link.href = url;
     link.download = nomeArquivo;
     link.click();
-
     URL.revokeObjectURL(url);
-    console.log(`✅ Arquivo JSON salvo: ${nomeArquivo}`);
+
+    // Salva no GitHub
+    const mensagem = `Correção: ${correcao.aluno} - ${correcao.data}`;
+    const salvouNoGithub = await salvarNoGithub(nomeArquivo, dataStr, mensagem);
+
+    if (salvouNoGithub) {
+        console.log(`✅ JSON salvo localmente e no GitHub: ${nomeArquivo}`);
+    } else {
+        console.warn(`⚠️ JSON salvo localmente, mas falhou no GitHub: ${nomeArquivo}`);
+    }
 }
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
