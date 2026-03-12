@@ -66,6 +66,64 @@ document.addEventListener('DOMContentLoaded', () => {
     criarModalHistorico();
 });
 
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// 📤 SALVAR ARQUIVO NO GITHUB
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+async function salvarNoGithub(nomeArquivo, conteudo, mensagemCommit) {
+    try {
+        const url = `https://api.github.com/repos/${GITHUB_USUARIO}/${GITHUB_REPOSITORIO}/contents/${GITHUB_PASTA}/${nomeArquivo}`;
+
+        // Verifica se o arquivo já existe para pegar o SHA
+        let sha = null;
+        const verificacao = await fetch(url, {
+            headers: {
+                'Authorization': `token ${GITHUB_TOKEN}`,
+                'Accept': 'application/vnd.github.v3+json'
+            }
+        });
+
+        if (verificacao.ok) {
+            const dadosExistentes = await verificacao.json();
+            sha = dadosExistentes.sha;
+        }
+
+        // Converte conteúdo para base64
+        const conteudoBase64 = btoa(unescape(encodeURIComponent(conteudo)));
+
+        const body = {
+            message: mensagemCommit,
+            content: conteudoBase64,
+            branch: 'main'
+        };
+
+        if (sha) body.sha = sha;
+
+        const resposta = await fetch(url, {
+            method: 'PUT',
+            headers: {
+                'Authorization': `token ${GITHUB_TOKEN}`,
+                'Accept': 'application/vnd.github.v3+json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(body)
+        });
+
+        if (resposta.ok) {
+            console.log(`✅ Arquivo salvo no GitHub: ${GITHUB_PASTA}/${nomeArquivo}`);
+            return true;
+        } else {
+            const erro = await resposta.json();
+            console.error('❌ Erro ao salvar no GitHub:', erro.message);
+            return false;
+        }
+
+    } catch (err) {
+        console.error('❌ Erro na comunicação com GitHub:', err);
+        return false;
+    }
+}
+
 // 👨‍🏫 Verificar e solicitar nome do professor
 function verificarNomeProfessor() {
     if (!nomeProfessor) {
