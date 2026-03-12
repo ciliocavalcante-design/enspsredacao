@@ -58,6 +58,7 @@
                         <button id="btnMarcador" class="btn-ferramenta">🖍️ Marcador</button>
                         <input type="color" id="corCaneta" value="#FF0000">
                         <button id="btnBorracha" class="btn-ferramenta">🧽 Borracha</button>
+                        <button id="btnMao" class="btn-ferramenta" title="Navegar sem desenhar">🖐️ Mão</button>
                         <button id="btnLimparDesenho" class="btn-ferramenta">🗑️ Limpar Tudo</button>
                     </div>
 
@@ -173,18 +174,17 @@
                         <textarea id="comentarios" placeholder="Digite aqui os comentários sobre a redação..."></textarea>
                     </div>
 
-
-<div style="display: flex; gap: 10px; margin-bottom: 15px; flex-wrap: wrap;">
-    <button id="btnVerHistorico" class="btn-secundario">
-        📊 Ver Histórico
-    </button>
-    <button id="btnExportarExcel" class="btn-secundario">
-        📊 Exportar Excel (XLSX)
-    </button>
- <!--   <button id="btnExportarPDF" class="btn-secundario">
-        📄 Exportar PDF
-    </button>-->
-</div>
+                    <div style="display: flex; gap: 10px; margin-bottom: 15px; flex-wrap: wrap;">
+                        <button id="btnVerHistorico" class="btn-secundario">
+                            📊 Ver Histórico
+                        </button>
+                        <button id="btnExportarExcel" class="btn-secundario">
+                            📊 Exportar Excel (XLSX)
+                        </button>
+                        <!--<button id="btnExportarPDF" class="btn-secundario">
+                            📄 Exportar PDF
+                        </button>-->
+                    </div>
 
                     <!-- Botão Salvar -->
                     <button id="btnSalvarCorrecao" class="btn-salvar">💾 Salvar Correção e Gerar PDF</button>
