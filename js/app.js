@@ -1,7 +1,7 @@
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 // ⚙️ CONFIGURAÇÕES GITHUB API
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-const GITHUB_TOKEN = 'enspstoken';
+const GITHUB_TOKEN = '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';
 const GITHUB_USUARIO = 'ciliocavalcante-design';
 const GITHUB_REPOSITORIO = 'ensps';
 const GITHUB_PASTA = 'correcoes';
