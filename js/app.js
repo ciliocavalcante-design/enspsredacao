@@ -63,6 +63,12 @@ document.addEventListener('DOMContentLoaded', () => {
     criarCanvasDesenho();
     verificarNomeProfessor();
     criarModalHistorico();
+
+    // Botão do header — sempre visível
+    const btnHistoricoHeader = document.getElementById('btnVerHistoricoHeader');
+    if (btnHistoricoHeader) {
+        btnHistoricoHeader.addEventListener('click', abrirModalHistorico);
+    }
 });
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
