@@ -793,18 +793,19 @@ async function abrirModalHistorico() {
 
         const arquivos = await resposta.json();
 
-        // Filtra só os .json e busca o conteúdo de cada um
-        const jsonFiles = arquivos.filter(f => f.name.endsWith('.json'));
+        // Filtra só os .json (ignora .gitkeep e outros)
+        const jsonFiles = arquivos.filter(f => f.name.endsWith('.json') && f.type === 'file');
 
         if (jsonFiles.length === 0) {
             conteudo.innerHTML = '<p style="text-align:center; color:#999; padding:40px;">Nenhuma correção salva ainda.</p>';
             return;
         }
 
-        // Busca o conteúdo de cada arquivo em paralelo
+        // Busca o conteúdo de cada arquivo via download_url (sem autenticação, raw do GitHub)
+        // Adiciona timestamp para evitar cache do navegador
         const correcoes = await Promise.all(
             jsonFiles.map(async (arquivo) => {
-                const r = await fetch(arquivo.download_url);
+                const r = await fetch(arquivo.download_url + '?t=' + Date.now());
                 return await r.json();
             })
         );
