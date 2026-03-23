@@ -8,7 +8,7 @@ const GITHUB_PASTA = 'correcoes';
 // Variáveis globais
 let redacaoAtual = null;
 let drawing = false;
-let currentTool = 'pen';
+let currentTool = 'pen'; a
 let currentColor = '#FF0000';
 let zoomLevel = 1;
 let nomeProfessor = localStorage.getItem('nomeProfessor') || '';
@@ -1023,12 +1023,40 @@ async function gerarPDF(correcao) {
         pdf.text(linhasComentario, 25, yPos + 2);
 
         const nomeArquivo = `ENSPS_correcao_${correcao.aluno.replace(/\s/g, '_')}_${Date.now()}.pdf`;
+
+        // Salva localmente (download no computador do professor)
         pdf.save(nomeArquivo);
+
+        // Envia para o Google Drive via proxy
+        btnSalvarCorrecao.textContent = '☁️ Enviando para o Drive...';
+        try {
+            const pdfBase64 = pdf.output('datauristring').split(',')[1];
+
+            const driveResponse = await fetch('https://ensps-proxy.ciliocavalcante.workers.dev/upload-pdf', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    fileName: nomeArquivo,
+                    fileBase64: pdfBase64
+                })
+            });
+
+            const driveResult = await driveResponse.json();
+
+            if (driveResult.success) {
+                console.log('✅ PDF enviado para o Google Drive:', driveResult.fileId);
+                alert('✅ Correção salva!\nJSON salvo no GitHub\nPDF salvo no Google Drive e no seu computador 🎉');
+            } else {
+                console.error('❌ Erro no Drive:', driveResult.error);
+                alert('✅ PDF gerado e baixado!\n⚠️ Mas não foi possível salvar no Google Drive.');
+            }
+        } catch (driveErr) {
+            console.error('❌ Erro ao enviar para o Drive:', driveErr);
+            alert('✅ PDF gerado e baixado!\n⚠️ Mas não foi possível salvar no Google Drive.');
+        }
 
         btnSalvarCorrecao.textContent = '💾 Salvar Correção e Gerar PDF';
         btnSalvarCorrecao.disabled = false;
-
-        alert('✅ Correção salva, JSON e PDF gerados com sucesso!');
 
     } catch (err) {
         console.error('Erro ao gerar PDF:', err);
