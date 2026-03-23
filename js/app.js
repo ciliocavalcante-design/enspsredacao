@@ -8,7 +8,7 @@ const GITHUB_PASTA = 'correcoes';
 // Variáveis globais
 let redacaoAtual = null;
 let drawing = false;
-let currentTool = 'pen';
+let currentTool = 'hand';
 let currentColor = '#FF0000';
 let zoomLevel = 1;
 let nomeProfessor = localStorage.getItem('nomeProfessor') || '';
@@ -68,6 +68,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnHistoricoHeader = document.getElementById('btnVerHistoricoHeader');
     if (btnHistoricoHeader) {
         btnHistoricoHeader.addEventListener('click', abrirModalHistorico);
+    }
+
+    // Inicia com ferramenta mão ativa
+    if (btnMao) {
+        btnMao.classList.add('active');
+        canvasRedacao.style.cursor = 'grab';
     }
 });
 
@@ -613,23 +619,26 @@ async function salvarArquivoJSON(correcao) {
     const nomeArquivo = `correcao_${correcao.aluno.replace(/\s/g, '_')}_${correcao.timestamp}.json`;
     const dataStr = JSON.stringify(correcao, null, 2);
 
-    // Salva localmente (download)
-    const blob = new Blob([dataStr], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = nomeArquivo;
-    link.click();
-    URL.revokeObjectURL(url);
+    // Salva localmente só se checkbox estiver marcado
+    const salvarLocal = document.getElementById('chkSalvarLocal');
+    if (salvarLocal && salvarLocal.checked) {
+        const blob = new Blob([dataStr], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = nomeArquivo;
+        link.click();
+        URL.revokeObjectURL(url);
+    }
 
-    // Salva no GitHub
+    // Salva no GitHub (sempre)
     const mensagem = `Correção: ${correcao.aluno} - ${correcao.data}`;
     const salvouNoGithub = await salvarNoGithub(nomeArquivo, dataStr, mensagem);
 
     if (salvouNoGithub) {
-        console.log(`✅ JSON salvo localmente e no GitHub: ${nomeArquivo}`);
+        console.log(`✅ JSON salvo no GitHub: ${nomeArquivo}`);
     } else {
-        console.warn(`⚠️ JSON salvo localmente, mas falhou no GitHub: ${nomeArquivo}`);
+        console.warn(`⚠️ Falhou ao salvar JSON no GitHub: ${nomeArquivo}`);
     }
 }
 
@@ -1051,8 +1060,11 @@ async function gerarPDF(correcao) {
 
         const nomeArquivo = `ENSPS_correcao_${correcao.aluno.replace(/\s/g, '_')}_${Date.now()}.pdf`;
 
-        // Salva localmente
-        pdf.save(nomeArquivo);
+        // Salva localmente só se checkbox estiver marcado
+        const salvarLocalPdf = document.getElementById('chkSalvarLocal');
+        if (salvarLocalPdf && salvarLocalPdf.checked) {
+            pdf.save(nomeArquivo);
+        }
 
         // Envia PDF para o GitHub via proxy
         btnSalvarCorrecao.textContent = '☁️ Enviando PDF para o GitHub...';
@@ -1083,7 +1095,9 @@ async function gerarPDF(correcao) {
 
             if (pdfResponse.ok) {
                 console.log('✅ PDF salvo no GitHub: pdfs/' + nomeArquivo);
-                alert('✅ Tudo salvo com sucesso!\n📋 JSON salvo no GitHub\n📄 PDF salvo no GitHub e no seu computador 🎉');
+                const salvoLocal = document.getElementById('chkSalvarLocal')?.checked;
+                const msgLocal = salvoLocal ? '\n💾 Arquivos baixados no computador' : '';
+                alert('✅ Tudo salvo com sucesso!\n📋 JSON salvo no GitHub\n📄 PDF salvo no GitHub' + msgLocal + ' 🎉');
             } else {
                 const erro = await pdfResponse.json();
                 console.error('❌ Erro ao salvar PDF no GitHub:', erro.message);
