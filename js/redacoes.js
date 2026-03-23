@@ -30,7 +30,7 @@ const redacoes = [
     },
     {
         id: 5,
-        aluno: "ISADORA REBOUÇAS MILITAO - 1º",
+        aluno: "ISADORA REBOUCAS MILITAO - 1º",
         tema: "Proposta 1º Ano",
         imagem: "ISADORA REBOUCAS MILITÃO.JPG",
         data: "23/03/2026"
