@@ -400,12 +400,14 @@ function setTool(tool) {
 // A função getCanvasCoordinates precisa ser ajustada para levar em conta o zoom
 function getCanvasCoordinates(e) {
     const rect = canvasRedacao.getBoundingClientRect();
+
+    // rect já reflete o tamanho visual com zoom aplicado pelo CSS scale()
+    // basta mapear as coordenadas do mouse para o espaço interno do canvas
     const scaleX = canvasRedacao.width / rect.width;
     const scaleY = canvasRedacao.height / rect.height;
 
-    // Ajusta as coordenadas do mouse pelo zoomLevel
-    const x = (e.clientX - rect.left) * scaleX / zoomLevel;
-    const y = (e.clientY - rect.top) * scaleY / zoomLevel;
+    const x = (e.clientX - rect.left) * scaleX;
+    const y = (e.clientY - rect.top) * scaleY;
 
     return { x, y };
 }
