@@ -152,6 +152,9 @@ function atualizarNomeProfessor() {
 function criarCanvasDesenho() {
     canvasDesenho = document.createElement('canvas');
     ctxDesenho = canvasDesenho.getContext('2d', { willReadFrequently: true });
+
+    canvasMarcador = document.createElement('canvas');
+    ctxMarcador = canvasMarcador.getContext('2d', { willReadFrequently: true });
 }
 
 function carregarListaRedacoes() {
@@ -341,6 +344,10 @@ function carregarImagem(src) {
         canvasDesenho.height = imagemRedacao.naturalHeight;
         ctxDesenho.clearRect(0, 0, canvasDesenho.width, canvasDesenho.height);
 
+        canvasMarcador.width = imagemRedacao.naturalWidth;
+        canvasMarcador.height = imagemRedacao.naturalHeight;
+        ctxMarcador.clearRect(0, 0, canvasMarcador.width, canvasMarcador.height);
+
         zoomLevel = 1; // Reseta o zoom ao carregar nova imagem
         aplicarZoom();
         atualizarDisplayZoom();
@@ -435,6 +442,11 @@ function startDrawing(e) {
     const { x, y } = getCanvasCoordinates(e);
     ctxDesenho.beginPath();
     ctxDesenho.moveTo(x, y);
+    // Inicia também no canvas do marcador
+    if (ctxMarcador) {
+        ctxMarcador.beginPath();
+        ctxMarcador.moveTo(x, y);
+    }
 }
 
 function draw(e) {
@@ -449,29 +461,42 @@ function draw(e) {
 
     const { x, y } = getCanvasCoordinates(e);
 
-    ctxDesenho.lineCap = 'round';
-    ctxDesenho.lineJoin = 'round';
-
     if (currentTool === 'eraser') {
+        ctxDesenho.lineCap = 'round';
+        ctxDesenho.lineJoin = 'round';
         ctxDesenho.globalCompositeOperation = 'destination-out';
         ctxDesenho.lineWidth = 30;
         ctxDesenho.globalAlpha = 1.0;
+        ctxDesenho.lineTo(x, y);
+        ctxDesenho.stroke();
+        ctxDesenho.beginPath();
+        ctxDesenho.moveTo(x, y);
+
     } else if (currentTool === 'marker') {
-        ctxDesenho.globalCompositeOperation = 'source-over';
-        ctxDesenho.globalAlpha = 0.3;
-        ctxDesenho.lineWidth = 20;
-        ctxDesenho.strokeStyle = currentColor;
+        // Desenha no canvas temporário (opaco) para evitar acúmulo
+        ctxMarcador.lineCap = 'round';
+        ctxMarcador.lineJoin = 'round';
+        ctxMarcador.globalCompositeOperation = 'source-over';
+        ctxMarcador.globalAlpha = 1.0;
+        ctxMarcador.lineWidth = 20;
+        ctxMarcador.strokeStyle = currentColor;
+        ctxMarcador.lineTo(x, y);
+        ctxMarcador.stroke();
+        ctxMarcador.beginPath();
+        ctxMarcador.moveTo(x, y);
+
     } else {
+        ctxDesenho.lineCap = 'round';
+        ctxDesenho.lineJoin = 'round';
         ctxDesenho.globalCompositeOperation = 'source-over';
         ctxDesenho.globalAlpha = 1.0;
         ctxDesenho.lineWidth = 3;
         ctxDesenho.strokeStyle = currentColor;
+        ctxDesenho.lineTo(x, y);
+        ctxDesenho.stroke();
+        ctxDesenho.beginPath();
+        ctxDesenho.moveTo(x, y);
     }
-
-    ctxDesenho.lineTo(x, y);
-    ctxDesenho.stroke();
-    ctxDesenho.beginPath();
-    ctxDesenho.moveTo(x, y);
 
     redesenharCanvas();
 }
@@ -487,8 +512,22 @@ function stopDrawing() {
     }
     if (drawing) {
         drawing = false;
+
+        // Se era marcador: transfere o traço temporário para o canvas definitivo com transparência uniforme
+        if (currentTool === 'marker' && ctxMarcador) {
+            ctxDesenho.globalAlpha = 0.25;
+            ctxDesenho.globalCompositeOperation = 'source-over';
+            ctxDesenho.drawImage(canvasMarcador, 0, 0);
+            ctxDesenho.globalAlpha = 1.0;
+            ctxDesenho.globalCompositeOperation = 'source-over';
+            // Limpa o canvas temporário para o próximo traço
+            ctxMarcador.clearRect(0, 0, canvasMarcador.width, canvasMarcador.height);
+            ctxMarcador.beginPath();
+        }
+
         ctxDesenho.beginPath();
         ctxDesenho.globalAlpha = 1.0;
+        redesenharCanvas();
     }
 }
 
@@ -501,6 +540,10 @@ function getTouchDistance(touches) {
 
 let pinchStartDistance = null;
 let pinchStartZoom = 1;
+
+// Canvas temporário para o marcador (evita acúmulo de transparência)
+let canvasMarcador = null;
+let ctxMarcador = null;
 
 function handleTouchStart(e) {
     e.preventDefault();
@@ -551,6 +594,12 @@ function redesenharCanvas() {
     ctx.clearRect(0, 0, canvasRedacao.width, canvasRedacao.height);
     ctx.drawImage(imagemRedacao, 0, 0);
     ctx.drawImage(canvasDesenho, 0, 0);
+    // Mostra preview do traço do marcador em tempo real
+    if (currentTool === 'marker' && canvasMarcador) {
+        ctx.globalAlpha = 0.25;
+        ctx.drawImage(canvasMarcador, 0, 0);
+        ctx.globalAlpha = 1.0;
+    }
 }
 
 function limparDesenho() {
