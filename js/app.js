@@ -1014,26 +1014,44 @@ async function gerarPDF(correcao) {
         // Salva localmente
         pdf.save(nomeArquivo);
 
-        // Envia para Google Drive via proxy
-        btnSalvarCorrecao.textContent = '☁️ Enviando para o Drive...';
+        // Envia PDF para o GitHub via proxy
+        btnSalvarCorrecao.textContent = '☁️ Enviando PDF para o GitHub...';
         try {
             const pdfBase64 = pdf.output('datauristring').split(',')[1];
-            const driveResponse = await fetch('https://ensps-proxy.ciliocavalcante.workers.dev/upload-pdf', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ fileName: nomeArquivo, fileBase64: pdfBase64 })
-            });
-            const driveResult = await driveResponse.json();
-            if (driveResult.success) {
-                console.log('✅ PDF enviado para o Google Drive:', driveResult.fileId);
-                alert('✅ Tudo salvo com sucesso!\n📋 JSON salvo no GitHub\n📄 PDF salvo no Drive e no seu computador 🎉');
-            } else {
-                console.error('❌ Erro no Drive:', driveResult.error);
-                alert('✅ PDF gerado e baixado!\n⚠️ Mas não foi possível salvar no Google Drive.');
+            const pdfPath = `${PROXY_URL}/pdfs/${nomeArquivo}`;
+
+            // Verifica se já existe (para pegar SHA)
+            let pdfSha = null;
+            const checkPdf = await fetch(pdfPath);
+            if (checkPdf.ok) {
+                const existing = await checkPdf.json();
+                pdfSha = existing.sha;
             }
-        } catch (driveErr) {
-            console.error('❌ Erro ao enviar para o Drive:', driveErr);
-            alert('✅ PDF gerado e baixado!\n⚠️ Mas não foi possível salvar no Google Drive.');
+
+            const pdfBody = {
+                message: `PDF: ${correcao.aluno}`,
+                content: pdfBase64,
+                branch: 'main'
+            };
+            if (pdfSha) pdfBody.sha = pdfSha;
+
+            const pdfResponse = await fetch(pdfPath, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(pdfBody)
+            });
+
+            if (pdfResponse.ok) {
+                console.log('✅ PDF salvo no GitHub: pdfs/' + nomeArquivo);
+                alert('✅ Tudo salvo com sucesso!\n📋 JSON salvo no GitHub\n📄 PDF salvo no GitHub e no seu computador 🎉');
+            } else {
+                const erro = await pdfResponse.json();
+                console.error('❌ Erro ao salvar PDF no GitHub:', erro.message);
+                alert('✅ PDF gerado e baixado!\n⚠️ Mas não foi possível salvar no GitHub.');
+            }
+        } catch (pdfErr) {
+            console.error('❌ Erro ao enviar PDF:', pdfErr);
+            alert('✅ PDF gerado e baixado!\n⚠️ Mas não foi possível salvar no GitHub.');
         }
 
         btnSalvarCorrecao.textContent = '💾 Salvar Correção e Gerar PDF';
