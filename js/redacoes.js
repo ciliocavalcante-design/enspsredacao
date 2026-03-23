@@ -1,160 +1,257 @@
-// js/redacoes.js
 const redacoes = [
+    // 1º ANO
     {
         id: 1,
-        aluno: "ANA LETICIA GOMES FREIRE",
-        tema: "Proposta 3º Ano",
-        imagem: "redacao1.JPG",
-        data: "15/01/2024"
+        aluno: "ADRYEL LEITE RODRIGUES NUNES VIANA - 1º",
+        tema: "Proposta 1º Ano",
+        imagem: "ADRYEL LEITE RODRIGUES NUNES VIANA.JPG",
+        data: "23/03/2026"
     },
     {
         id: 2,
-        aluno: "ARTHUR SILVA CAVALCANTE",
-        tema: "Proposta 3º Ano",
-        imagem: "redacao2.JPG",
-        data: "16/01/2024"
+        aluno: "ARIEL MELO PATRICIO - 1º",
+        tema: "Proposta 1º Ano",
+        imagem: "ARIEL MELO PATRICIO.JPG",
+        data: "23/03/2026"
     },
     {
         id: 3,
-        aluno: "ARTUR FERREIRA LOPES",
-        tema: "Proposta 3º Ano",
-        imagem: "redacao3.JPG",
-        data: "17/01/2024"
-    }, // <--- Fechamento correto do objeto anterior
-    { // <--- Removida a chave '{' extra aqui
+        aluno: "DAVIH MARIANO BARROS DE OLIVEIRA - 1º",
+        tema: "Proposta 1º Ano",
+        imagem: "DAVIH MARIANO BARROS DE OLIVEIRA.JPG",
+        data: "23/03/2026"
+    },
+    {
         id: 4,
-        aluno: "BRUNO VICTOR DE SOUSA CAVALCANTE",
-        tema: "Proposta 3º Ano",
-        imagem: "redacao4.JPG",
-        data: "16/01/2024"
+        aluno: "FERNANDA VIANA SA TEIXEIRA - 1º",
+        tema: "Proposta 1º Ano",
+        imagem: "FERNANDA VIANA SA TEIXEIRA.JPG",
+        data: "23/03/2026"
     },
-    { // <--- Removida a chave '{' extra aqui
+    {
         id: 5,
-        aluno: "CARLOS ALBERTO DOS SANTOS GONÇALVES",
-        tema: "Proposta 3º Ano",
-        imagem: "redacao5.JPG",
-        data: "16/01/2024"
+        aluno: "ISADORA REBOUÇAS MILITAO - 1º",
+        tema: "Proposta 1º Ano",
+        imagem: "ISADORA REBOUÇAS MILITÃO.JPG",
+        data: "23/03/2026"
     },
-    { // <--- Removida a chave '{' extra aqui
+    {
         id: 6,
-        aluno: "GABRIEL SILVA DE MOURA FREIRE",
-        tema: "Proposta 3º Ano",
-        imagem: "redacao7.JPG",
-        data: "16/01/2024"
+        aluno: "JAMILLY VITORIA RIBEIRO SILVA - 1º",
+        tema: "Proposta 1º Ano",
+        imagem: "JAMILLY VITORIA RIBEIRO SILVA.JPG",
+        data: "23/03/2026"
     },
-    { // <--- Removida a chave '{' extra aqui
+    {
         id: 7,
-        aluno: "GUILHERME DOS REIS CAVALCANTI",
-        tema: "Proposta 3º Ano",
-        imagem: "redacao8.JPG",
-        data: "16/01/2024"
+        aluno: "JOAO VITOR MAIA ARAGAO - 1º",
+        tema: "Proposta 1º Ano",
+        imagem: "JOAO VITOR MAIA ARAGAO.JPG",
+        data: "23/03/2026"
     },
-    { // <--- Removida a chave '{' extra aqui
+    {
         id: 8,
-        aluno: "HEITOR LIMA MARTINS",
-        tema: "Proposta 3º Ano",
-        imagem: "redacao9.JPG",
-        data: "16/01/2024"
+        aluno: "JOSE THALYS FRAGA OLIVEIRA - 1º",
+        tema: "Proposta 1º Ano",
+        imagem: "JOSE THALYS FRAGA OLIVEIRA.JPG",
+        data: "23/03/2026"
     },
-
-    { // <--- Removida a chave '{' extra aqui
+    {
         id: 9,
-        aluno: "LUIS FERNANDO CLAUDIO FERRO",
-        tema: "Proposta 3º Ano",
-        imagem: "redacao11.JPG",
-        data: "16/01/2024"
+        aluno: "KAYO JHEBERSON MAGALHAES SANTIAGO - 1º",
+        tema: "Proposta 1º Ano",
+        imagem: "KAYO JHEBERSON MAGALHAES SANTIAGO.JPG",
+        data: "23/03/2026"
     },
-    { // <--- Removida a chave '{' extra aqui
+    {
+        id: 10,
+        aluno: "KLYSSIA DA SILVA BORGES - 1º",
+        tema: "Proposta 1º Ano",
+        imagem: "KLYSSIA DA SILVA BORGES.JPG",
+        data: "23/03/2026"
+    },
+    {
         id: 11,
-        aluno: "MARCOS VENICIOS SILVA FARIAS",
-        tema: "Proposta 3º Ano",
-        imagem: "redacao12.JPG",
-        data: "16/01/2024"
+        aluno: "LARA CHRISTINE LIMA SALLES - 1º",
+        tema: "Proposta 1º Ano",
+        imagem: "LARA CHRISTINE LIMA SALLES.JPG",
+        data: "23/03/2026"
     },
-    { // <--- Removida a chave '{' extra aqui
+    {
         id: 12,
-        aluno: "MARIA FERNANDA DE MESQUITA MENEZES",
-        tema: "Proposta 3º Ano",
-        imagem: "redacao13.JPG",
-        data: "16/01/2024"
+        aluno: "MAILY EVELY DOS SANTOS RIBEIRO - 1º",
+        tema: "Proposta 1º Ano",
+        imagem: "MAILY EVELY DOS SANTOS RIBEIRO.JPG",
+        data: "23/03/2026"
     },
-    { // <--- Removida a chave '{' extra aqui
+    {
         id: 13,
-        aluno: "MIRELLY EVELYN DA SILVA FERREIRA",
-        tema: "Proposta 3º Ano",
-        imagem: "redacao15.JPG",
-        data: "16/01/2024"
+        aluno: "MARCIO WELLINGTON DA COSTA FILHO - 1º",
+        tema: "Proposta 1º Ano",
+        imagem: "MARCIO WELLINGTON DA COSTA FILHO.JPG",
+        data: "23/03/2026"
     },
-    { // <--- Removida a chave '{' extra aqui
+    {
         id: 14,
-        aluno: "NAYLA ARAUJO DE SOUSA",
-        tema: "Proposta 3º Ano",
-        imagem: "redacao16.JPG",
-        data: "16/01/2024"
+        aluno: "MARIA ISABEL DO NASCIMENTO BARBOSA - 1º",
+        tema: "Proposta 1º Ano",
+        imagem: "MARIA ISABEL DO NASCIMENTO BARBOSA.JPG",
+        data: "23/03/2026"
     },
-    { // <--- Removida a chave '{' extra aqui
+    {
         id: 15,
-        aluno: "PEDRO HENRIQUE NASCIMENTO DE OLIVERIRA",
-        tema: "Proposta 3º Ano",
-        imagem: "redacao17.JPG",
-        data: "16/01/2024"
+        aluno: "MARIA VITORIA BERNARDINO AGUIAR - 1º",
+        tema: "Proposta 1º Ano",
+        imagem: "MARIA VITORIA BERNARDINO AGUIAR.JPG",
+        data: "23/03/2026"
     },
-    { // <--- Removida a chave '{' extra aqui
+    {
         id: 16,
-        aluno: "REYNALDO DE ANIFA DOMINGOS FENIASSE",
-        tema: "Proposta 3º Ano",
-        imagem: "redacao19.JPG",
-        data: "16/01/2024"
+        aluno: "PEDRO VINICIUS BARROS LIMA - 1º",
+        tema: "Proposta 1º Ano",
+        imagem: "PEDRO VINICIUS BARROS LIMA.JPG",
+        data: "23/03/2026"
     },
-    { // <--- Removida a chave '{' extra aqui
+    {
         id: 17,
-        aluno: "RICARDO DA SILVA GONÇALVES FILHO",
-        tema: "Proposta 3º Ano",
-        imagem: "redacao20.JPG",
-        data: "16/01/2024"
+        aluno: "ROBERT DOUGLAS SAAD RODRIGUES FILHO - 1º",
+        tema: "Proposta 1º Ano",
+        imagem: "ROBERT DOUGLAS SAAD RODRIGUES FILHO.JPG",
+        data: "23/03/2026"
     },
-    { // <--- Removida a chave '{' extra aqui
+    {
         id: 18,
-        aluno: "RYAN DELMAR SOUSA AUGUSTO",
-        tema: "Proposta 3º Ano",
-        imagem: "redacao21.JPG",
-        data: "16/01/2024"
+        aluno: "SARA GABRIELE SILVA GOMES - 1º",
+        tema: "Proposta 1º Ano",
+        imagem: "SARA GABRIELE SILVA GOMES.JPG",
+        data: "23/03/2026"
     },
-    { // <--- Removida a chave '{' extra aqui
+
+    // 2º ANO
+    {
         id: 19,
-        aluno: "YASMIN LIMA FURTADO",
-        tema: "Proposta 3º Ano",
-        imagem: "redacao23.JPG",
-        data: "16/01/2024"
+        aluno: "ANA NICOLLY MEDEIROS MAIA - 2º",
+        tema: "Proposta 2º Ano",
+        imagem: "ANA NICOLLY MEDEIROS MAIA.JPG",
+        data: "23/03/2026"
     },
-    { // <--- Removida a chave '{' extra aqui
+    {
         id: 20,
-        aluno: "YURI PEREIRA BARROSO",
-        tema: "Proposta 3º Ano",
-        imagem: "redacao24.JPG",
-        data: "16/01/2024"
+        aluno: "ANITA GABRIELE SOARES MAGALHAES - 2º",
+        tema: "Proposta 2º Ano",
+        imagem: "ANITA GABRIELE SOARES MAGALHAES.JPG",
+        data: "23/03/2026"
     },
-    { // <--- Removida a chave '{' extra aqui
+    {
         id: 21,
-        aluno: "ANNA CAROLINA QUEIROZ DE ARAUJO",
-        tema: "Proposta 3º Ano",
-        imagem: "redacao25.JPG",
-        data: "16/01/2024"
+        aluno: "BEATRIZ SOLANGE CHAVES MAGALHAES - 2º",
+        tema: "Proposta 2º Ano",
+        imagem: "BEATRIZ SOLANGE CHAVES MAGALHAES.JPG",
+        data: "23/03/2026"
     },
-    { // <--- Removida a chave '{' extra aqui
+    {
         id: 22,
-        aluno: "SAULO MESQUITA ARAUJO",
-        tema: "Proposta 3º Ano",
-        imagem: "redacao26.JPG",
-        data: "16/01/2024"
+        aluno: "CAMILA MATOS NASCIMENTO - 2º",
+        tema: "Proposta 2º Ano",
+        imagem: "CAMILA MATOS NASCIMENTO.JPG",
+        data: "23/03/2026"
     },
-    { // <--- Removida a chave '{' extra aqui
+    {
         id: 23,
-        aluno: "OTAVIO MESSIAS PEREIRA GOMES",
-        tema: "Proposta 3º Ano",
-        imagem: "redacao27.JPG",
-        data: "16/01/2024"
-    } // <--- Fechamento correto do último objeto
-
-]; // <--- Fechamento do array 'redacoes'
-
+        aluno: "JAMES ALAN BARROS ALVES CAVALCANTE - 2º",
+        tema: "Proposta 2º Ano",
+        imagem: "JAMES ALAN BARROS ALVES CAVALCANTE.JPG",
+        data: "23/03/2026"
+    },
+    {
+        id: 24,
+        aluno: "JOAO HENRIQUE FERNANDES PEREIRA - 2º",
+        tema: "Proposta 2º Ano",
+        imagem: "JOAO HENRIQUE FERNANDES PEREIRA.JPG",
+        data: "23/03/2026"
+    },
+    {
+        id: 25,
+        aluno: "JUAN DAVY SOARES MACIEL - 2º",
+        tema: "Proposta 2º Ano",
+        imagem: "JUAN DAVY SOARES MACIEL.JPG",
+        data: "23/03/2026"
+    },
+    {
+        id: 26,
+        aluno: "LARISSA DIAS DUARTE - 2º",
+        tema: "Proposta 2º Ano",
+        imagem: "LARISSA DIAS DUARTE.JPG",
+        data: "23/03/2026"
+    },
+    {
+        id: 27,
+        aluno: "LARISSA DOS SANTOS ALCANTARA - 2º",
+        tema: "Proposta 2º Ano",
+        imagem: "LARISSA DOS SANTOS ALCANTARA.JPG",
+        data: "23/03/2026"
+    },
+    {
+        id: 28,
+        aluno: "LISLEY KATLYN MARTINS - 2º",
+        tema: "Proposta 2º Ano",
+        imagem: "LISLEY KATLYN MARTINS.JPG",
+        data: "23/03/2026"
+    },
+    {
+        id: 29,
+        aluno: "LIVIA IRIS RODRIGUES DE CASTRO - 2º",
+        tema: "Proposta 2º Ano",
+        imagem: "LIVIA IRIS RODRIGUES DE CASTRO.JPG",
+        data: "23/03/2026"
+    },
+    {
+        id: 30,
+        aluno: "MARIA CLARA CAVALCANTE FRAGA - 2º",
+        tema: "Proposta 2º Ano",
+        imagem: "MARIA CLARA CAVALCANTE FRAGA.JPG",
+        data: "23/03/2026"
+    },
+    {
+        id: 31,
+        aluno: "MARIANA DE FATIMA DE MATOS MESQUITA - 2º",
+        tema: "Proposta 2º Ano",
+        imagem: "MARIANA DE FATIMA DE MATOS MESQUITA.JPG",
+        data: "23/03/2026"
+    },
+    {
+        id: 32,
+        aluno: "MOISES SOARES PESSOA NETO - 2º",
+        tema: "Proposta 2º Ano",
+        imagem: "MOISES SOARES PESSOA NETO.JPG",
+        data: "23/03/2026"
+    },
+    {
+        id: 33,
+        aluno: "SAMUEL ANTONIO DE ABREU ALVES VIEIRA - 2º",
+        tema: "Proposta 2º Ano",
+        imagem: "SAMUEL ANTONIO DE ABREU ALVES VIEIRA.JPG",
+        data: "23/03/2026"
+    },
+    {
+        id: 34,
+        aluno: "SAMUEL FERNANDES DE OLIVEIRA - 2º",
+        tema: "Proposta 2º Ano",
+        imagem: "SAMUEL FERNANDES DE OLIVEIRA.JPG",
+        data: "23/03/2026"
+    },
+    {
+        id: 35,
+        aluno: "SAYONARA EMILLY PEREIRA NERI - 2º",
+        tema: "Proposta 2º Ano",
+        imagem: "SAYONARA EMILLY PEREIRA NERI.JPG",
+        data: "23/03/2026"
+    },
+    {
+        id: 36,
+        aluno: "YAGO SA DE OLIVEIRA - 2º",
+        tema: "Proposta 2º Ano",
+        imagem: "YAGO SA DE OLIVEIRA.JPG",
+        data: "23/03/2026"
+    }
+];
