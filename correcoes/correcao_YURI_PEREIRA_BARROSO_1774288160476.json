@@ -1,0 +1,18 @@
+{
+  "id": "corr_1774288160476",
+  "redacaoId": 20,
+  "aluno": "YURI PEREIRA BARROSO",
+  "tema": "Proposta 3º Ano",
+  "professor": "Ravena",
+  "notas": {
+    "competencia1": 0,
+    "competencia2": 0,
+    "competencia3": 0,
+    "competencia4": 200,
+    "competencia5": 200
+  },
+  "notaFinal": 400,
+  "comentarios": "",
+  "data": "23/03/2026, 14:49:20",
+  "timestamp": 1774288160476
+}
