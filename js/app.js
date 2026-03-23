@@ -1,14 +1,8 @@
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-// ⚙️ CONFIGURAÇÕES GITHUB API
+// ⚙️ CONFIGURAÇÕES — proxy seguro via Cloudflare Worker
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-// ⚠️ INSTRUÇÃO: Gere um novo token em:
-//    github.com → Settings → Developer Settings →
-//    Personal Access Tokens → Fine-grained tokens
-//    Permissão necessária: Contents → Read and Write
-//    Repositório: apenas "ensps"
-const GITHUB_TOKEN = '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';
-const GITHUB_USUARIO = 'ciliocavalcante-design';
-const GITHUB_REPOSITORIO = 'ensps';
+// O token do GitHub fica guardado no Cloudflare (nunca exposto aqui)
+const PROXY_URL = 'https://ensps-proxy.ciliocavalcante.workers.dev/proxy';
 const GITHUB_PASTA = 'correcoes';
 
 // Variáveis globais
@@ -76,47 +70,20 @@ document.addEventListener('DOMContentLoaded', () => {
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 async function salvarNoGithub(nomeArquivo, conteudo, mensagemCommit) {
-    // Verifica se o token foi configurado
-    if (!GITHUB_TOKEN || GITHUB_TOKEN === 'COLE_SEU_NOVO_TOKEN_AQUI') {
-        console.warn('⚠️ Token GitHub não configurado. Pulando envio ao GitHub.');
-        return false;
-    }
-
     try {
-        const url = `https://api.github.com/repos/${GITHUB_USUARIO}/${GITHUB_REPOSITORIO}/contents/${GITHUB_PASTA}/${nomeArquivo}`;
-
-        console.log('📤 Tentando salvar no GitHub:', url);
+        const proxyPath = `${PROXY_URL}/${GITHUB_PASTA}/${nomeArquivo}`;
+        console.log('📤 Tentando salvar via proxy:', proxyPath);
 
         // Verifica se o arquivo já existe para pegar o SHA
-        // (obrigatório pelo GitHub ao atualizar um arquivo existente)
         let sha = null;
-        const verificacao = await fetch(url, {
-            headers: {
-                'Authorization': `Bearer ${GITHUB_TOKEN}`,
-                'Accept': 'application/vnd.github+json'
-            }
-        });
-
+        const verificacao = await fetch(proxyPath);
         console.log('🔍 Status da verificação:', verificacao.status);
-
-        if (verificacao.status === 401) {
-            console.error('❌ Token inválido ou expirado. Gere um novo token no GitHub.');
-            alert('❌ Erro de autenticação no GitHub!\n\nO token está inválido ou expirado.\nGere um novo em: GitHub → Settings → Developer Settings → Personal Access Tokens');
-            return false;
-        }
-
-        if (verificacao.status === 403) {
-            console.error('❌ Token sem permissão de escrita no repositório.');
-            alert('❌ Token sem permissão!\n\nO token não tem permissão de escrita (Contents: Write) no repositório "ensps".');
-            return false;
-        }
 
         if (verificacao.ok) {
             const dadosExistentes = await verificacao.json();
             sha = dadosExistentes.sha;
             console.log('📄 Arquivo já existe, SHA:', sha);
         }
-        // status 404 = arquivo ainda não existe, tudo certo para criar
 
         // Converte conteúdo para base64 (suporta acentos/UTF-8)
         const conteudoBase64 = btoa(unescape(encodeURIComponent(conteudo)));
@@ -127,41 +94,28 @@ async function salvarNoGithub(nomeArquivo, conteudo, mensagemCommit) {
             branch: 'main'
         };
 
-        if (sha) body.sha = sha; // obrigatório ao atualizar
+        if (sha) body.sha = sha;
 
-        const resposta = await fetch(url, {
+        const resposta = await fetch(proxyPath, {
             method: 'PUT',
-            headers: {
-                'Authorization': `Bearer ${GITHUB_TOKEN}`,
-                'Accept': 'application/vnd.github+json',
-                'Content-Type': 'application/json'
-            },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(body)
         });
 
         console.log('📬 Status do envio:', resposta.status);
 
         if (resposta.ok) {
-            console.log(`✅ Arquivo salvo no GitHub: ${GITHUB_PASTA}/${nomeArquivo}`);
+            console.log(`✅ Arquivo salvo no GitHub via proxy: ${GITHUB_PASTA}/${nomeArquivo}`);
             return true;
         } else {
             const erro = await resposta.json();
-            console.error('❌ Erro ao salvar no GitHub:', erro.message);
-            console.error('❌ Detalhes:', JSON.stringify(erro));
-
-            const mensagensErro = {
-                'Bad credentials': 'Token inválido ou revogado. Gere um novo token.',
-                'Not Found': 'Repositório não encontrado. Verifique GITHUB_USUARIO e GITHUB_REPOSITORIO.',
-                'Resource not accessible by personal access token': 'Token sem permissão de escrita. Revise as permissões do token.'
-            };
-
-            const dica = mensagensErro[erro.message] || erro.message;
-            alert(`❌ Erro ao salvar no GitHub:\n${dica}`);
+            console.error('❌ Erro ao salvar:', erro.message);
+            alert(`❌ Erro ao salvar no GitHub:\n${erro.message}`);
             return false;
         }
 
     } catch (err) {
-        console.error('❌ Erro na comunicação com GitHub:', err);
+        console.error('❌ Erro na comunicação com o proxy:', err);
         return false;
     }
 }
