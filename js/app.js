@@ -471,6 +471,9 @@ function draw(e) {
 }
 
 function stopDrawing() {
+    // Reseta o pinch zoom
+    pinchStartDistance = null;
+
     if (isPanning) {
         isPanning = false;
         canvasRedacao.style.cursor = 'grab';
@@ -483,24 +486,59 @@ function stopDrawing() {
     }
 }
 
+// Distância entre dois toques (para pinch zoom)
+function getTouchDistance(touches) {
+    const dx = touches[0].clientX - touches[1].clientX;
+    const dy = touches[0].clientY - touches[1].clientY;
+    return Math.sqrt(dx * dx + dy * dy);
+}
+
+let pinchStartDistance = null;
+let pinchStartZoom = 1;
+
 function handleTouchStart(e) {
     e.preventDefault();
-    const touch = e.touches[0];
-    const mouseEvent = new MouseEvent('mousedown', {
-        clientX: touch.clientX,
-        clientY: touch.clientY
-    });
-    canvasRedacao.dispatchEvent(mouseEvent);
+
+    // Pinch com 2 dedos — só na ferramenta mão
+    if (e.touches.length === 2 && currentTool === 'hand') {
+        pinchStartDistance = getTouchDistance(e.touches);
+        pinchStartZoom = zoomLevel;
+        return;
+    }
+
+    // Toque normal com 1 dedo
+    if (e.touches.length === 1) {
+        const touch = e.touches[0];
+        const mouseEvent = new MouseEvent('mousedown', {
+            clientX: touch.clientX,
+            clientY: touch.clientY
+        });
+        canvasRedacao.dispatchEvent(mouseEvent);
+    }
 }
 
 function handleTouchMove(e) {
     e.preventDefault();
-    const touch = e.touches[0];
-    const mouseEvent = new MouseEvent('mousemove', {
-        clientX: touch.clientX,
-        clientY: touch.clientY
-    });
-    canvasRedacao.dispatchEvent(mouseEvent);
+
+    // Pinch zoom com 2 dedos — só na ferramenta mão
+    if (e.touches.length === 2 && currentTool === 'hand' && pinchStartDistance) {
+        const currentDistance = getTouchDistance(e.touches);
+        const ratio = currentDistance / pinchStartDistance;
+        zoomLevel = Math.min(2.5, Math.max(0.5, pinchStartZoom * ratio));
+        aplicarZoom();
+        atualizarDisplayZoom();
+        return;
+    }
+
+    // Movimento normal com 1 dedo
+    if (e.touches.length === 1) {
+        const touch = e.touches[0];
+        const mouseEvent = new MouseEvent('mousemove', {
+            clientX: touch.clientX,
+            clientY: touch.clientY
+        });
+        canvasRedacao.dispatchEvent(mouseEvent);
+    }
 }
 
 function redesenharCanvas() {
