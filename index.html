@@ -23,11 +23,14 @@
                     <p>Sistema de correção com marcação de trechos e avaliação por competências</p>
                 </div>
             </div>
-            <div style="margin-top: 15px; text-align: center;">
+            <div style="margin-top: 15px; text-align: center; display: flex; align-items: center; justify-content: center; gap: 15px; flex-wrap: wrap;">
                 <span style="background: rgba(255,255,255,0.2); padding: 8px 20px; border-radius: 20px; font-size: 0.95em;">
                     👨‍🏫 Professor: <strong id="nomeProfessor">---</strong>
                     <button id="btnAlterarProfessor" style="margin-left: 10px; background: rgba(255,255,255,0.3); border: none; padding: 5px 12px; border-radius: 15px; cursor: pointer; color: white; font-size: 0.85em;">✏️ Alterar</button>
                 </span>
+                <button id="btnVerHistoricoHeader" onclick="abrirModalHistorico()" style="background: rgba(255,255,255,0.25); border: 2px solid rgba(255,255,255,0.5); padding: 8px 20px; border-radius: 20px; cursor: pointer; color: white; font-size: 0.95em; font-weight: bold;">
+                    📊 Ver Histórico da Turma
+                </button>
             </div>
         </header>
 
@@ -200,3 +203,4 @@
 
 </body>
 </html>
+
