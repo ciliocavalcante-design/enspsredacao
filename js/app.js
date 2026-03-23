@@ -8,7 +8,7 @@ const GITHUB_PASTA = 'correcoes';
 // Variáveis globais
 let redacaoAtual = null;
 let drawing = false;
-let currentTool = 'pen'; a
+let currentTool = 'pen';
 let currentColor = '#FF0000';
 let zoomLevel = 1;
 let nomeProfessor = localStorage.getItem('nomeProfessor') || '';
@@ -85,7 +85,6 @@ async function salvarNoGithub(nomeArquivo, conteudo, mensagemCommit) {
             console.log('📄 Arquivo já existe, SHA:', sha);
         }
 
-        // Converte conteúdo para base64 (suporta acentos/UTF-8)
         const conteudoBase64 = btoa(unescape(encodeURIComponent(conteudo)));
 
         const body = {
@@ -110,7 +109,6 @@ async function salvarNoGithub(nomeArquivo, conteudo, mensagemCommit) {
         } else {
             const erro = await resposta.json();
             console.error('❌ Erro ao salvar:', erro.message);
-            alert(`❌ Erro ao salvar no GitHub:\n${erro.message}`);
             return false;
         }
 
@@ -779,21 +777,15 @@ async function abrirModalHistorico() {
     const modal = document.getElementById('modalHistorico');
     const conteudo = document.getElementById('conteudoHistorico');
 
-    // Mostra loading enquanto busca do GitHub
     modal.style.display = 'block';
     conteudo.innerHTML = '<p style="text-align:center; color:#999; padding:40px;">⏳ Carregando correções do GitHub...</p>';
 
     try {
-        // Busca a lista de arquivos da pasta correcoes via proxy
         const resposta = await fetch(`${PROXY_URL}/${GITHUB_PASTA}`);
-        
-        if (!resposta.ok) {
-            throw new Error('Erro ao acessar o GitHub');
-        }
+
+        if (!resposta.ok) throw new Error('Erro ao acessar o GitHub');
 
         const arquivos = await resposta.json();
-
-        // Filtra só os .json (ignora .gitkeep e outros)
         const jsonFiles = arquivos.filter(f => f.name.endsWith('.json') && f.type === 'file');
 
         if (jsonFiles.length === 0) {
@@ -801,8 +793,6 @@ async function abrirModalHistorico() {
             return;
         }
 
-        // Busca o conteúdo de cada arquivo via download_url (sem autenticação, raw do GitHub)
-        // Adiciona timestamp para evitar cache do navegador
         const correcoes = await Promise.all(
             jsonFiles.map(async (arquivo) => {
                 const r = await fetch(arquivo.download_url + '?t=' + Date.now());
@@ -810,10 +800,8 @@ async function abrirModalHistorico() {
             })
         );
 
-        // Ordena por data mais recente
         correcoes.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
 
-        // Calcula média da turma
         const media = Math.round(correcoes.reduce((acc, c) => acc + c.notaFinal, 0) / correcoes.length);
 
         let html = `
@@ -828,16 +816,9 @@ async function abrirModalHistorico() {
             <table class="tabela-historico">
                 <thead>
                     <tr>
-                        <th>Aluno</th>
-                        <th>Tema</th>
-                        <th>Professor</th>
-                        <th>C1</th>
-                        <th>C2</th>
-                        <th>C3</th>
-                        <th>C4</th>
-                        <th>C5</th>
-                        <th>Nota Final</th>
-                        <th>Data</th>
+                        <th>Aluno</th><th>Tema</th><th>Professor</th>
+                        <th>C1</th><th>C2</th><th>C3</th><th>C4</th><th>C5</th>
+                        <th>Nota Final</th><th>Data</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -862,7 +843,7 @@ async function abrirModalHistorico() {
             `;
         });
 
-        html += `</tbody></table>`;
+        html += '</tbody></table>';
         conteudo.innerHTML = html;
 
     } catch (err) {
@@ -1024,28 +1005,22 @@ async function gerarPDF(correcao) {
 
         const nomeArquivo = `ENSPS_correcao_${correcao.aluno.replace(/\s/g, '_')}_${Date.now()}.pdf`;
 
-        // Salva localmente (download no computador do professor)
+        // Salva localmente
         pdf.save(nomeArquivo);
 
-        // Envia para o Google Drive via proxy
+        // Envia para Google Drive via proxy
         btnSalvarCorrecao.textContent = '☁️ Enviando para o Drive...';
         try {
             const pdfBase64 = pdf.output('datauristring').split(',')[1];
-
             const driveResponse = await fetch('https://ensps-proxy.ciliocavalcante.workers.dev/upload-pdf', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    fileName: nomeArquivo,
-                    fileBase64: pdfBase64
-                })
+                body: JSON.stringify({ fileName: nomeArquivo, fileBase64: pdfBase64 })
             });
-
             const driveResult = await driveResponse.json();
-
             if (driveResult.success) {
                 console.log('✅ PDF enviado para o Google Drive:', driveResult.fileId);
-                alert('✅ Correção salva!\nJSON salvo no GitHub\nPDF salvo no Google Drive e no seu computador 🎉');
+                alert('✅ Tudo salvo com sucesso!\n📋 JSON salvo no GitHub\n📄 PDF salvo no Drive e no seu computador 🎉');
             } else {
                 console.error('❌ Erro no Drive:', driveResult.error);
                 alert('✅ PDF gerado e baixado!\n⚠️ Mas não foi possível salvar no Google Drive.');
