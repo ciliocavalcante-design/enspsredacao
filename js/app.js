@@ -515,7 +515,7 @@ function stopDrawing() {
 
         // Se era marcador: transfere o traço temporário para o canvas definitivo com transparência uniforme
         if (currentTool === 'marker' && ctxMarcador) {
-            ctxDesenho.globalAlpha = 0.25;
+            ctxDesenho.globalAlpha = 0.45;
             ctxDesenho.globalCompositeOperation = 'source-over';
             ctxDesenho.drawImage(canvasMarcador, 0, 0);
             ctxDesenho.globalAlpha = 1.0;
@@ -596,7 +596,7 @@ function redesenharCanvas() {
     ctx.drawImage(canvasDesenho, 0, 0);
     // Mostra preview do traço do marcador em tempo real
     if (currentTool === 'marker' && canvasMarcador) {
-        ctx.globalAlpha = 0.25;
+        ctx.globalAlpha = 0.45;
         ctx.drawImage(canvasMarcador, 0, 0);
         ctx.globalAlpha = 1.0;
     }
