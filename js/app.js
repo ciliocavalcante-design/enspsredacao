@@ -775,51 +775,99 @@ function criarModalHistorico() {
     });
 }
 
-function abrirModalHistorico() {
-    const correcoes = JSON.parse(localStorage.getItem('correcoes') || '[]');
+async function abrirModalHistorico() {
     const modal = document.getElementById('modalHistorico');
     const conteudo = document.getElementById('conteudoHistorico');
 
-    if (correcoes.length === 0) {
-        conteudo.innerHTML = '<p style="text-align:center; color:#999; padding:40px;">Nenhuma correção salva ainda.</p>';
-    } else {
+    // Mostra loading enquanto busca do GitHub
+    modal.style.display = 'block';
+    conteudo.innerHTML = '<p style="text-align:center; color:#999; padding:40px;">⏳ Carregando correções do GitHub...</p>';
+
+    try {
+        // Busca a lista de arquivos da pasta correcoes via proxy
+        const resposta = await fetch(`${PROXY_URL}/${GITHUB_PASTA}`);
+        
+        if (!resposta.ok) {
+            throw new Error('Erro ao acessar o GitHub');
+        }
+
+        const arquivos = await resposta.json();
+
+        // Filtra só os .json e busca o conteúdo de cada um
+        const jsonFiles = arquivos.filter(f => f.name.endsWith('.json'));
+
+        if (jsonFiles.length === 0) {
+            conteudo.innerHTML = '<p style="text-align:center; color:#999; padding:40px;">Nenhuma correção salva ainda.</p>';
+            return;
+        }
+
+        // Busca o conteúdo de cada arquivo em paralelo
+        const correcoes = await Promise.all(
+            jsonFiles.map(async (arquivo) => {
+                const r = await fetch(arquivo.download_url);
+                return await r.json();
+            })
+        );
+
+        // Ordena por data mais recente
+        correcoes.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
+
+        // Calcula média da turma
+        const media = Math.round(correcoes.reduce((acc, c) => acc + c.notaFinal, 0) / correcoes.length);
+
         let html = `
+            <div style="display:flex; gap:15px; margin-bottom:15px; flex-wrap:wrap;">
+                <div style="background:#667eea; color:white; padding:10px 20px; border-radius:10px;">
+                    📝 <strong>${correcoes.length}</strong> correções
+                </div>
+                <div style="background:#48bb78; color:white; padding:10px 20px; border-radius:10px;">
+                    📊 Média da turma: <strong>${media}/1000</strong>
+                </div>
+            </div>
             <table class="tabela-historico">
                 <thead>
                     <tr>
                         <th>Aluno</th>
                         <th>Tema</th>
                         <th>Professor</th>
+                        <th>C1</th>
+                        <th>C2</th>
+                        <th>C3</th>
+                        <th>C4</th>
+                        <th>C5</th>
                         <th>Nota Final</th>
                         <th>Data</th>
-                        <th>Ações</th>
                     </tr>
                 </thead>
                 <tbody>
         `;
 
-        correcoes.forEach((corr, index) => {
+        correcoes.forEach((corr) => {
+            const nota = corr.notaFinal;
+            const cor = nota >= 800 ? '#48bb78' : nota >= 600 ? '#667eea' : nota >= 400 ? '#ed8936' : '#e53e3e';
             html += `
                 <tr>
                     <td>${corr.aluno}</td>
                     <td>${corr.tema}</td>
-                    <td>${corr.professor}</td>
-                    <td><strong>${corr.notaFinal}/1000</strong></td>
+                    <td>${corr.professor || '—'}</td>
+                    <td>${corr.notas?.competencia1 ?? '—'}</td>
+                    <td>${corr.notas?.competencia2 ?? '—'}</td>
+                    <td>${corr.notas?.competencia3 ?? '—'}</td>
+                    <td>${corr.notas?.competencia4 ?? '—'}</td>
+                    <td>${corr.notas?.competencia5 ?? '—'}</td>
+                    <td><strong style="color:${cor}">${nota}/1000</strong></td>
                     <td>${corr.data}</td>
-                    <td>
-                        <button class="btn-excluir" onclick="excluirCorrecao(${index})">
-                            🗑️ Excluir
-                        </button>
-                    </td>
                 </tr>
             `;
         });
 
         html += `</tbody></table>`;
         conteudo.innerHTML = html;
-    }
 
-    modal.style.display = 'block';
+    } catch (err) {
+        console.error('Erro ao carregar histórico:', err);
+        conteudo.innerHTML = '<p style="text-align:center; color:#e53e3e; padding:40px;">❌ Erro ao carregar correções do GitHub.</p>';
+    }
 }
 
 function fecharModalHistorico() {
