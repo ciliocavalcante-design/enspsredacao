@@ -1,0 +1,18 @@
+{
+  "id": "corr_1774287254059",
+  "redacaoId": 6,
+  "aluno": "GABRIEL SILVA DE MOURA FREIRE",
+  "tema": "Proposta 3º Ano",
+  "professor": "Ravena",
+  "notas": {
+    "competencia1": 80,
+    "competencia2": 160,
+    "competencia3": 200,
+    "competencia4": 160,
+    "competencia5": 200
+  },
+  "notaFinal": 800,
+  "comentarios": "",
+  "data": "23/03/2026, 14:34:14",
+  "timestamp": 1774287254072
+}
