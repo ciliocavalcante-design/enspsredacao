@@ -1,0 +1,18 @@
+{
+  "id": "corr_1774740582102",
+  "redacaoId": 10,
+  "aluno": "KLYSSIA DA SILVA BORGES - 1º",
+  "tema": "Proposta 1º Ano",
+  "professor": "Ravena Matos",
+  "notas": {
+    "competencia1": 120,
+    "competencia2": 120,
+    "competencia3": 80,
+    "competencia4": 120,
+    "competencia5": 120
+  },
+  "notaFinal": 560,
+  "comentarios": "Texto abordou somente o vídeo do Felca.",
+  "data": "28/03/2026, 20:29:42",
+  "timestamp": 1774740582295
+}
