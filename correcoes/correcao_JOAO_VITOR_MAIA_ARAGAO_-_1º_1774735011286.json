@@ -1,0 +1,18 @@
+{
+  "id": "corr_1774735011284",
+  "redacaoId": 7,
+  "aluno": "JOAO VITOR MAIA ARAGAO - 1º",
+  "tema": "Proposta 1º Ano",
+  "professor": "Ravena Matos",
+  "notas": {
+    "competencia1": 80,
+    "competencia2": 120,
+    "competencia3": 120,
+    "competencia4": 120,
+    "competencia5": 120
+  },
+  "notaFinal": 560,
+  "comentarios": "Muitos erros de acentuação e ortografia.",
+  "data": "28/03/2026, 18:56:51",
+  "timestamp": 1774735011286
+}
