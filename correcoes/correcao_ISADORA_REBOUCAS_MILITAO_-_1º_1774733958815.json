@@ -1,0 +1,18 @@
+{
+  "id": "corr_1774733958815",
+  "redacaoId": 5,
+  "aluno": "ISADORA REBOUCAS MILITAO - 1º",
+  "tema": "Proposta 1º Ano",
+  "professor": "Ravena Matos",
+  "notas": {
+    "competencia1": 80,
+    "competencia2": 120,
+    "competencia3": 120,
+    "competencia4": 120,
+    "competencia5": 40
+  },
+  "notaFinal": 480,
+  "comentarios": "",
+  "data": "28/03/2026, 18:39:18",
+  "timestamp": 1774733958815
+}
