@@ -1,0 +1,18 @@
+{
+  "id": "corr_1774743179644",
+  "redacaoId": 15,
+  "aluno": "MARIA VITORIA BERNARDINO AGUIAR - 1º",
+  "tema": "Proposta 1º Ano",
+  "professor": "Ravena Matos",
+  "notas": {
+    "competencia1": 120,
+    "competencia2": 160,
+    "competencia3": 120,
+    "competencia4": 160,
+    "competencia5": 120
+  },
+  "notaFinal": 680,
+  "comentarios": "",
+  "data": "28/03/2026, 21:12:59",
+  "timestamp": 1774743179645
+}
