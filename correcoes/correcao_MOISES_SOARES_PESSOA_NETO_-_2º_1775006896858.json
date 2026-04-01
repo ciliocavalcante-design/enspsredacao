@@ -1,0 +1,18 @@
+{
+  "id": "corr_1775006896858",
+  "redacaoId": 32,
+  "aluno": "MOISES SOARES PESSOA NETO - 2º",
+  "tema": "Proposta 2º Ano",
+  "professor": "Ravena Matos",
+  "notas": {
+    "competencia1": 120,
+    "competencia2": 160,
+    "competencia3": 120,
+    "competencia4": 160,
+    "competencia5": 40
+  },
+  "notaFinal": 600,
+  "comentarios": "",
+  "data": "31/03/2026, 22:28:16",
+  "timestamp": 1775006896858
+}
