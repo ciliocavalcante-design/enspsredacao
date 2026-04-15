@@ -132,7 +132,7 @@ const redacoes = [
         tema: "Proposta 1º Ano",
         imagem: "0019.JPG",
         data: "23/03/2026"
-    }
+    },
 
     // 2º ANO
     {
@@ -302,7 +302,7 @@ const redacoes = [
         tema: "Proposta 2º Ano",
         imagem: "0043.JPG",
         data: "23/03/2026"
-    }
+    },
 
     // 3º ANO
     {
