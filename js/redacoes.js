@@ -144,7 +144,7 @@ const redacoes = [
     },
     {
         id: 21,
-        aluno: "ANGELO VINICIUS LEITE SILVA FILHO - 2º",
+        aluno: "ANGELO VINICIUS LEITE SILVA FILHO - 2º - 2ª chamada",
         tema: "Proposta 2º Ano",
         imagem: "0021.JPG",
         data: "23/03/2026"
@@ -193,21 +193,21 @@ const redacoes = [
     },
     {
         id: 28,
-        aluno: "KAUE NICOLAS FELIX NICOLAU - 2º",
+        aluno: "KAUE NICOLAS FELIX NICOLAU - 2º - 2ª chamada",
         tema: "Proposta 2º Ano",
         imagem: "0028.JPG",
         data: "23/03/2026"
     },
     {
         id: 29,
-        aluno: "LAILA RIOS BRILHANTE - 2º",
+        aluno: "LAILA RIOS BRILHANTE - 2º - 2ª chamada",
         tema: "Proposta 2º Ano",
         imagem: "0029.JPG",
         data: "23/03/2026"
     },
     {
         id: 30,
-        aluno: "LANA NUNES DO NASCIMENTO - 2º",
+        aluno: "LANA NUNES DO NASCIMENTO - 2º - 2ª chamada",
         tema: "Proposta 2º Ano",
         imagem: "0030.JPG",
         data: "23/03/2026"
@@ -249,7 +249,7 @@ const redacoes = [
     },
     {
         id: 36,
-        aluno: "MARIA JULIA DE ARAUJO CAVALCANTE - 2º",
+        aluno: "MARIA JULIA DE ARAUJO CAVALCANTE - 2º - 2ª chamada",
         tema: "Proposta 2º Ano",
         imagem: "0036.JPG",
         data: "23/03/2026"
@@ -270,7 +270,7 @@ const redacoes = [
     },
     {
         id: 39,
-        aluno: "NICOLLY SOUZA RABAY - 2º",
+        aluno: "NICOLLY SOUZA RABAY - 2º - 2ª chamada",
         tema: "Proposta 2º Ano",
         imagem: "0039.JPG",
         data: "23/03/2026"
@@ -377,7 +377,7 @@ const redacoes = [
     },
     {
         id: 54,
-        aluno: "JOAO MARCELO RIOLO DA SILVA - 3º",
+        aluno: "JOAO MARCELO RIOLO DA SILVA - 3º - 2ª chamada",
         tema: "Proposta 3º Ano",
         imagem: "0054.JPG",
         data: "23/03/2026"
@@ -398,7 +398,7 @@ const redacoes = [
     },
     {
         id: 57,
-        aluno: "MARIA CLARA PINTO RODRIGUES - 3º",
+        aluno: "MARIA CLARA PINTO RODRIGUES - 3º - 2ª chamada",
         tema: "Proposta 3º Ano",
         imagem: "0057.JPG",
         data: "23/03/2026"
@@ -412,7 +412,7 @@ const redacoes = [
     },
     {
         id: 59,
-        aluno: "MARIA GABRIELA MADEIRO DE ALCANTARA - 3º",
+        aluno: "MARIA GABRIELA MADEIRO DE ALCANTARA - 3º - 2ª chamada",
         tema: "Proposta 3º Ano",
         imagem: "0059.JPG",
         data: "23/03/2026"
@@ -507,5 +507,68 @@ const redacoes = [
         tema: "Proposta 3º Ano",
         imagem: "0072.JPG",
         data: "23/03/2026"
+    },
+    {
+        id: 73,
+        aluno: "ANGELO VINICIUS LEITE SILVA FILHO - 2º - 2ª chamada",
+        tema: "Proposta 2º Ano",
+        imagem: "0073.JPG",
+        data: "16/04/2026"
+    },
+    {
+        id: 74,
+        aluno: "KAUE NICOLAS FELIX NICOLAU - 2º - 2ª chamada",
+        tema: "Proposta 2º Ano",
+        imagem: "0074.JPG",
+        data: "16/04/2026"
+    },
+    {
+        id: 75,
+        aluno: "LAILA RIOS BRILHANTE - 2º - 2ª chamada",
+        tema: "Proposta 2º Ano",
+        imagem: "0075.JPG",
+        data: "16/04/2026"
+    },
+    {
+        id: 76,
+        aluno: "LANA NUNES DO NASCIMENTO - 2º - 2ª chamada",
+        tema: "Proposta 2º Ano",
+        imagem: "0076.JPG",
+        data: "16/04/2026"
+    },
+    {
+        id: 77,
+        aluno: "MARIA JULIA DE ARAUJO CAVALCANTE - 2º - 2ª chamada",
+        tema: "Proposta 2º Ano",
+        imagem: "0077.JPG",
+        data: "16/04/2026"
+    },
+    {
+        id: 78,
+        aluno: "NICOLLY SOUZA RABAY - 2º - 2ª chamada",
+        tema: "Proposta 2º Ano",
+        imagem: "0078.JPG",
+        data: "16/04/2026"
+    },
+    {
+        id: 79,
+        aluno: "MARIA CLARA PINTO RODRIGUES - 3º - 2ª chamada",
+        tema: "Proposta 3º Ano",
+        imagem: "0079.JPG",
+        data: "16/04/2026"
+    },
+    {
+        id: 80,
+        aluno: "MARIA GABRIELA MADEIRO DE ALCANTARA - 3º - 2ª chamada",
+        tema: "Proposta 3º Ano",
+        imagem: "0080.JPG",
+        data: "16/04/2026"
+    },
+    {
+        id: 81,
+        aluno: "JOAO MARCELO RIOLO DA SILVA - 3º - 2ª chamada",
+        tema: "Proposta 3º Ano",
+        imagem: "0081.JPG",
+        data: "16/04/2026"
     }
 ];
