@@ -1,0 +1,18 @@
+{
+  "id": "corr_1776992140643",
+  "redacaoId": 46,
+  "aluno": "ARTHUR SILVA CAVALCANTE - 3º",
+  "tema": "Proposta 3º Ano",
+  "professor": "Ravena Matos",
+  "notas": {
+    "competencia1": 160,
+    "competencia2": 120,
+    "competencia3": 120,
+    "competencia4": 160,
+    "competencia5": 160
+  },
+  "notaFinal": 720,
+  "comentarios": "",
+  "data": "23/04/2026, 21:55:40",
+  "timestamp": 1776992140643
+}
